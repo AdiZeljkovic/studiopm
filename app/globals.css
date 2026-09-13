@@ -1,26 +1,207 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------
+   Design tokens
+   Architectural neutral palette, one restrained red accent.
+   The brand red is a placeholder until matched to the official logo file.
+------------------------------------------------------------------- */
+@theme {
+  --color-ivory: #f5f2ec;
+  --color-ivory-light: #f8f6f2;
+  --color-sand: #ece8e1;
+  --color-sand-deep: #e1dbd1;
+  --color-ink: #171614;
+  --color-ink-soft: #22201e;
+  --color-ink-muted: #3a3733;
+  --color-taupe: #746c62;
+  --color-taupe-light: #a1988c;
+  --color-line: #d9d2c7;
+  --color-line-strong: #bcb3a6;
+  --color-line-dark: #35322e;
+  --color-brand: #c41e25; /* TODO: match exactly to the supplied logo */
+  --color-brand-deep: #a3161c;
+
+  --font-sans: var(--font-geist-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: var(--font-instrument-serif), "Times New Roman", Georgia, serif;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --breakpoint-3xl: 1600px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    color-scheme: light;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11", "kern";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-brand);
+    outline-offset: 4px;
+  }
+
+  input,
+  textarea,
+  button,
+  select {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------
+   Editorial utilities
+------------------------------------------------------------------- */
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1600px;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 3rem;
+  }
+  @media (width >= 96rem) {
+    padding-inline: 4rem;
+  }
+}
+
+@utility label {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility label-sm {
+  font-size: 0.625rem;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility text-display-xl {
+  font-size: clamp(3rem, 8.2vw, 8.75rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  font-weight: 300;
+}
+
+@utility text-display-lg {
+  font-size: clamp(2.5rem, 5.8vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-weight: 300;
+}
+
+@utility text-display-md {
+  font-size: clamp(2rem, 4vw, 3.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 300;
+}
+
+@utility text-display-sm {
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 300;
+}
+
+@utility text-lede {
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+
+@utility text-body {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+@utility hairline {
+  border-color: var(--color-line);
+  border-width: 1px;
+}
+
+/* Animated underline for text links */
+@utility link-underline {
+  position: relative;
+  text-decoration: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.15em;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Serif italic line inside a display heading */
+@utility display-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.06em;
+  letter-spacing: -0.01em;
+}
+
+/* Numbered serif figure used for large step numbers */
+@utility figure-serif {
+  font-family: var(--font-serif);
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-underline::after {
+    transition: none;
+  }
 }
