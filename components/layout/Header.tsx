@@ -20,7 +20,6 @@ interface HeaderProps {
 }
 
 export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -28,14 +27,6 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
 
   const home = `/${locale}`;
   const to = (hash: string) => `${home}${hash}`;
-
-  // Header surface: transparent over the hero, translucent ivory afterwards.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // Track the section currently in view for the active navigation state.
   useEffect(() => {
@@ -81,9 +72,9 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-700 ease-[var(--ease-out-expo)]",
-        scrolled && !open
-          ? "border-b border-line/80 bg-ivory/85 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
+        // Same solid surface at every scroll position, so the navigation
+        // always reads cleanly over the hero image.
+        open ? "border-b border-transparent bg-ivory" : "border-b border-line/80 bg-ivory/90 backdrop-blur-md",
       )}
     >
       <div className="container-site flex h-16 items-center justify-between gap-4 lg:h-20">
