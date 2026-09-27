@@ -440,7 +440,6 @@ export const fr: Content = {
       { label: "Confidentialité", href: "/privacy" },
       { label: "Mentions légales", href: "/legal" },
     ],
-    tagline: "Un studio PortMix",
     region: "Architecture d’intérieur, Echandens, Suisse",
     copyright: "© {year} Studio PortMix. Tous droits réservés.",
     backToTop: "Retour en haut",

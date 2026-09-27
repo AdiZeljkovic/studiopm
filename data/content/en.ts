@@ -441,7 +441,6 @@ export const en = {
       { label: "Privacy", href: "/privacy" },
       { label: "Legal notice", href: "/legal" },
     ] satisfies NavLink[],
-    tagline: "A PortMix studio",
     region: "Interior architecture, Echandens, Switzerland",
     copyright: "© {year} Studio PortMix. All rights reserved.",
     backToTop: "Back to top",
