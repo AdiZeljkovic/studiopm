@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // Development imagery is served from Unsplash. Once real Studio Portmix
+    // Development imagery is served from Unsplash. Once real Studio PortMix
     // photography is available, drop the files into /public/images and update
     // data/images.ts — this pattern can then be removed.
     remotePatterns: [

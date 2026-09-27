@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useValidationMessage } from "../messages";
 import { cn } from "@/lib/cn";
 
 interface FieldLabelProps {
@@ -37,7 +40,9 @@ interface FieldMessageProps {
 }
 
 /** Hint below a field; the error replaces nothing and stays quiet in tone. */
-export function FieldMessage({ hint, hintId, error, errorId }: FieldMessageProps) {
+export function FieldMessage({ hint, hintId, error: errorKey, errorId }: FieldMessageProps) {
+  const translate = useValidationMessage();
+  const error = translate(errorKey);
   if (!hint && !error) return null;
   return (
     <div className="mt-2 space-y-1">

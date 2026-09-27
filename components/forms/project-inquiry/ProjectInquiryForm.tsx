@@ -8,7 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
-import type { Content } from "@/lib/i18n";
+import type { Content, Locale } from "@/lib/i18n";
+import { ValidationMessagesProvider } from "./messages";
 import {
   INQUIRY_STEP_COUNT,
   inquiryDefaultValues,
@@ -31,6 +32,7 @@ import { FieldMessage } from "./fields/FieldChrome";
 
 interface ProjectInquiryFormProps {
   content: Content["inquiry"];
+  locale: Locale;
   privacyHref: string;
 }
 
@@ -53,7 +55,7 @@ const zodInquiryResolver = zodResolver(projectInquirySchema);
 const inquiryResolver: typeof zodInquiryResolver = (values, context, options) =>
   zodInquiryResolver(normaliseInquiryValues(values), context, options);
 
-export function ProjectInquiryForm({ content, privacyHref }: ProjectInquiryFormProps) {
+export function ProjectInquiryForm({ content, locale, privacyHref }: ProjectInquiryFormProps) {
   // The saved draft is read from localStorage after hydration (null on the
   // server) and drives the initial step and the "restored" notice.
   const rawDraft = useSyncExternalStore(noopSubscribe, readInitialDraft, () => null);
@@ -130,7 +132,7 @@ export function ProjectInquiryForm({ content, privacyHref }: ProjectInquiryFormP
       const response = await fetch("/api/project-inquiry", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...normaliseInquiryValues(data), website: honeypot }),
+        body: JSON.stringify({ ...normaliseInquiryValues(data), locale, website: honeypot }),
       });
       if (!response.ok) throw new Error(`Request failed (${response.status})`);
       clearDraft();
@@ -172,9 +174,16 @@ export function ProjectInquiryForm({ content, privacyHref }: ProjectInquiryFormP
 
   return (
     <div ref={topRef} className="scroll-mt-24">
+      <ValidationMessagesProvider messages={content.validation}>
       <FormProvider {...methods}>
         <form noValidate onSubmit={(e) => void handleSubmit(onValid, onInvalid)(e)} onKeyDown={onKeyDown}>
-          <Progress eyebrow={content.eyebrow} step={step} names={content.stepNames} onJump={goTo} />
+          <Progress
+            eyebrow={content.eyebrow}
+            step={step}
+            names={content.stepNames}
+            onJump={goTo}
+            navLabel={content.stepsNavLabel}
+          />
 
           {restored ? (
             <p className="label-sm mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-taupe">
@@ -338,6 +347,7 @@ export function ProjectInquiryForm({ content, privacyHref }: ProjectInquiryFormP
           </div>
         </form>
       </FormProvider>
+      </ValidationMessagesProvider>
     </div>
   );
 }

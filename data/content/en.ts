@@ -1,79 +1,26 @@
-import type { ServiceImageKey, SpaceImageKey } from "@/data/images";
-import type {
-  clientTypes,
-  projectTypes,
-  propertyTypes,
-  projectStages,
-  timings,
-  sources,
-} from "@/lib/project-inquiry/schema";
+import type { ChoiceOption, NavLink, ProcessStep, ServiceItem } from "@/data/content/types";
 
 /**
  * English content dictionary.
  *
- * All user-facing copy for the site lives here so that French and German
- * versions can be added as sibling files (fr.ts, de.ts) with the same shape.
- * Keep structure identical across locales; see lib/i18n.ts.
+ * The shape of this object defines the `Content` type (see lib/i18n.ts);
+ * every other locale file must match it exactly.
+ * Brand spelling: always "PortMix" with a capital M.
  */
-
-export interface NavLink {
-  label: string;
-  href: string;
-}
-
-export interface ServiceItem {
-  id: string;
-  number: string;
-  title: string;
-  description: string;
-  image: ServiceImageKey;
-}
-
-export interface ProcessStep {
-  number: string;
-  title: string;
-  description: string;
-  involves: string;
-}
-
-export interface SpaceItem {
-  id: string;
-  number: string;
-  title: string;
-  descriptor: string;
-  image: SpaceImageKey;
-}
-
-export interface ChoiceOption<T extends string = string> {
-  value: T;
-  label: string;
-  hint?: string;
-}
-
-type ClientType = (typeof clientTypes)[number];
-type ProjectType = (typeof projectTypes)[number];
-type PropertyType = (typeof propertyTypes)[number];
-type ProjectStage = (typeof projectStages)[number];
-type Timing = (typeof timings)[number];
-type Source = (typeof sources)[number];
-
 export const en = {
   meta: {
-    title: "Studio Portmix | Interior Architecture & Design",
+    title: "Studio PortMix | Interior Architecture & Design",
     description:
-      "Studio Portmix creates thoughtful, bespoke interiors from concept to realization, combining interior architecture, custom design and practical project expertise.",
+      "Studio PortMix designs and realises bespoke interiors, from concept to completion, combining interior architecture, custom joinery and practical project expertise. Showroom in Echandens, Switzerland.",
   },
 
   common: {
     skipToContent: "Skip to content",
-    startProject: "Start a project",
-    designInspiration: "Design inspiration",
-    referenceImagery: "Reference imagery, not a Studio Portmix project",
-    scroll: "Scroll",
     menu: "Menu",
     close: "Close",
     openMenu: "Open navigation",
     closeMenu: "Close navigation",
+    language: "Language",
   },
 
   navigation: {
@@ -81,77 +28,66 @@ export const en = {
       { label: "Studio", href: "#studio" },
       { label: "Expertise", href: "#expertise" },
       { label: "Approach", href: "#approach" },
-      { label: "Projects", href: "#projects" },
-      { label: "Gallery", href: "#gallery" },
+      { label: "Contact", href: "#contact" },
     ] satisfies NavLink[],
     cta: { label: "Start a project", href: "#project-inquiry" } satisfies NavLink,
   },
 
   hero: {
-    eyebrow: ["Studio Portmix", "Interior architecture"],
+    eyebrow: ["Studio PortMix", "Interior architecture"],
     headline: ["Spaces shaped", "around the way", "you live."],
     intro:
-      "From the first idea to the final detail, Studio Portmix creates thoughtful interiors where architecture, materials and everyday life come together.",
-    pillarsLabel: "What we do",
-    pillars: [
-      "Interior architecture & space planning",
-      "Materials, lighting & bespoke joinery",
-      "Project coordination & realization",
-    ],
+      "From the first idea to the final detail, Studio PortMix creates thoughtful interiors where architecture, materials and everyday life come together.",
     factsLabel: "The studio",
     facts: [
-      "Two interior architects",
-      "Based in French-speaking Switzerland",
-      "Built on Portmix joinery expertise since 2017",
+      "A design studio specialising in bespoke interiors and joinery",
+      "600 m² showroom in Echandens, Switzerland",
+      "Built on PortMix joinery expertise",
     ],
-    primaryCta: { label: "Discover the studio", href: "#studio" },
-    secondaryCta: { label: "Start a project", href: "#project-inquiry" },
+    primaryCta: { label: "Start a project", href: "#project-inquiry" },
+    secondaryCta: { label: "Discover the studio", href: "#studio" },
     indicator: { number: "01", label: "Studio" },
-    meta: ["Interior architecture", "French-speaking Switzerland"],
+    meta: ["Interior architecture", "Echandens, Switzerland"],
     scroll: "Scroll",
   },
 
   studio: {
     index: "01",
     label: "The studio",
-    meta: "Two interior architects",
+    meta: "Echandens, Switzerland",
     statement: ["Beautiful interiors begin", "with understanding", "how you live."],
     body:
-      "Studio Portmix brings together interior architecture, bespoke design and real-world construction expertise to create spaces that are coherent, functional and deeply personal.",
-    body2:
-      "We design and realise interiors for private homes, apartments and second residences, as well as hotels, restaurants, showrooms and professional spaces. New construction, renovation, transformation, bespoke furniture and joinery, through to complete project delivery: one studio for the whole interior.",
-    architects: {
-      title: ["Two architects.", "One project vision."],
-      paragraphs: [
-        "Behind Studio Portmix are two interior architects who personally accompany every project. We value direct communication, close collaboration and a deeply individual approach.",
-        "From understanding your vision to coordinating its realization, you work with people who know your project in detail. We listen carefully, take time to understand how you live and how the space works, and translate that into one coherent project we then see through to the last detail.",
-      ],
-      facts: [
-        { label: "Studio", value: "Two interior architects" },
-        { label: "Based in", value: "French-speaking Switzerland" },
-        { label: "Working on", value: "Homes, hospitality & professional spaces" },
-        { label: "Rooted in", value: "Portmix interior joinery, since 2017" },
-      ],
+      "Studio PortMix brings together interior architecture, bespoke design and real-world construction expertise to create spaces that are coherent, functional and deeply personal.",
+    team: {
+      title: ["Our interior architects", "by your side."],
+      text:
+        "From the first conversation to the last detail, you work directly with the interior architects who design your project. We take the time to listen, to understand how you live and how the space works, and we stay with you through every decision.",
     },
-    captions: {
-      main: "Working drawings",
-      detail: "Layout studies",
+    audience: {
+      label: "For whom",
+      text:
+        "We work with private clients as well as establishments and investors who want to create or transform a space: houses, apartments, second homes, restaurants, hotels, holiday rentals, guesthouses, Airbnb, chalets and professional spaces. We adapt our support to every project.",
+    },
+    showroom: {
+      label: "Showroom, Echandens",
+      title: "Visits by appointment only.",
+      text:
+        "Our showroom is a place to take time: to talk through your project, see and touch materials, and make decisions calmly. Because we receive you by appointment, we are entirely available to you throughout your visit.",
+      cta: { label: "Book a visit", href: "#contact" },
     },
   },
 
   visualBreak: {
-    caption: "Design inspiration",
-    detail: "Material & spatial study",
+    label: "Interior atmosphere",
   },
 
   expertise: {
     index: "02",
-    label: "What we do",
-    meta: "Seven services",
+    label: "Expertise",
+    meta: "From concept to completion",
     title: ["From the first sketch", "to the final detail."],
     intro:
       "One studio for the whole interior: analysis, architecture, materials, bespoke elements and the coordination needed to bring everything to completion.",
-    hint: "Select a service",
     services: [
       {
         id: "analysis",
@@ -207,60 +143,22 @@ export const en = {
 
   advantage: {
     index: "03",
-    label: "Design & implementation",
-    meta: "Built on Portmix expertise",
-    title: ["Design with an understanding", "of how things are", "actually built."],
+    label: "Design & joinery",
+    meta: "Since 2017",
+    title: ["Built on PortMix", "joinery expertise."],
+    lede: "We don't only design interiors. We know how every element is made.",
     body:
-      "Our experience in interior joinery and interior fit-out gives us a practical understanding of materials, detailing and execution. Combined with a trusted network of architects, craftsmen and specialist companies, this allows us to coordinate projects with clarity from concept through completion.",
-    tags: ["Design", "Material", "Craft", "Execution"],
-    captions: {
-      main: "Material study",
-      detail: "Lighting detail",
-      doors: "Interior doors & joinery",
-    },
-    heritage: {
-      title: ["Built on", "Portmix expertise."],
-      paragraphs: [
-        "Studio Portmix grows from the experience Portmix has developed since 2017 in interior joinery and demanding interior projects across French-speaking Switzerland: interior doors, wardrobes, custom furniture, and close work with construction and real-estate professionals.",
-        "Today, that technical knowledge supports a broader design practice, one capable of thinking about the entire interior rather than isolated elements, and of knowing, at the drawing stage, how each detail will be made.",
-      ],
-      timeline: [
-        { label: "2017", text: "Portmix begins its activity in interior joinery: interior doors, wardrobes and custom furniture." },
-        { label: "Today", text: "Studio Portmix extends this expertise into interior architecture and complete project delivery." },
-      ],
-    },
-  },
-
-  spaces: {
-    index: "04",
-    label: "Spaces we shape",
-    meta: "Eight typologies",
-    title: ["From private homes", "to hospitality and", "professional spaces."],
-    intro:
-      "Every brief has a different life inside it. We work across residential, hospitality and commercial interiors, for people who use them and for those who invest in them.",
-    items: [
-      { id: "residences", number: "01", title: "Private residences", descriptor: "Houses & family homes", image: "residences" },
-      { id: "apartments", number: "02", title: "Apartments", descriptor: "City living, reconfigured", image: "apartments" },
-      { id: "second-homes", number: "03", title: "Second homes", descriptor: "Mountain, lake & countryside", image: "secondHomes" },
-      { id: "hospitality", number: "04", title: "Hospitality", descriptor: "Guest-facing interiors", image: "hospitality" },
-      { id: "restaurants", number: "05", title: "Restaurants", descriptor: "Dining rooms & bars", image: "restaurants" },
-      { id: "hotels", number: "06", title: "Hotels", descriptor: "Rooms, suites & common areas", image: "hotels" },
-      { id: "investment", number: "07", title: "Investment properties", descriptor: "Rental & short-stay", image: "investment" },
-      { id: "professional", number: "08", title: "Professional spaces", descriptor: "Showrooms, offices & spas", image: "professional" },
-    ] satisfies SpaceItem[],
-    disclaimer: "Images are design references and not completed Studio Portmix projects.",
+      "Since 2017, PortMix has worked in interior joinery across French-speaking Switzerland: interior doors, wardrobes, bespoke furniture and demanding fit-outs alongside construction and real-estate professionals. That hands-on knowledge of materials, details and execution shapes every Studio PortMix design from the first sketch, and lets us coordinate craftsmen and specialists with clarity through to completion.",
+    keywords: ["Design", "Material", "Craft", "Execution"],
   },
 
   process: {
-    index: "05",
+    index: "04",
     label: "Our approach",
     meta: "Six steps",
     title: ["A clear process,", "from idea to reality."],
     intro:
-      "Six steps, one continuous conversation. The sequence keeps decisions in the right order, avoids surprises on site and means you always know what comes next.",
-    principlesLabel: "How we work",
-    principles: ["Listen", "Understand", "Translate", "Accompany"],
-    imageCaption: "Layout studies",
+      "Six steps, one continuous conversation. Each decision comes at the right moment, there are no surprises on site, and you always know what comes next.",
     steps: [
       {
         number: "01",
@@ -294,41 +192,21 @@ export const en = {
         number: "05",
         title: "Coordinate",
         description:
-          "When required, we coordinate craftsmen, specialists and project partners, with one point of contact for the whole project and a shared understanding of the details.",
+          "When required, we coordinate craftsmen, specialists and project partners, with a single point of contact for the whole project.",
         involves: "Craftsmen, specialists and project partners",
       },
       {
         number: "06",
         title: "Realize",
         description:
-          "We follow the project through implementation and final detailing, checking that what was drawn is what gets built, until the space is ready to be lived in.",
+          "We follow the project through implementation and final detailing, making sure that what was drawn is exactly what gets built.",
         involves: "Site follow-up and final details",
       },
-    ],
-  },
-
-
-
-  gallery: {
-    index: "06",
-    label: "Gallery",
-    meta: "Seven references",
-    title: ["Spaces.", "Materials.", "Details."],
-    intro: "A selection of interiors and material references that inform the way we think about light, proportion and finish.",
-    captions: [
-      "Marble & oak",
-      "Leather & afternoon light",
-      "Concrete & water",
-      "Shadow & stone",
-      "Timber & glazing",
-      "Walnut & herringbone",
-      "Plaster & rhythm",
-    ],
-    disclaimer: "Reference imagery, not Studio Portmix projects.",
+    ] satisfies ProcessStep[],
   },
 
   projectCta: {
-    index: "07",
+    index: "05",
     label: "Start a project",
     meta: "A first conversation",
     title: ["Have a space", "in mind?"],
@@ -339,6 +217,7 @@ export const en = {
   inquiry: {
     eyebrow: "Your project",
     stepNames: ["Contact", "Project", "Vision", "Timeline", "Documents", "Finish"],
+    stepsNavLabel: "Questionnaire steps",
     nav: {
       previous: "Previous",
       next: "Continue",
@@ -346,7 +225,6 @@ export const en = {
       sending: "Sending",
       edit: "Edit",
       optional: "Optional",
-      required: "Required",
     },
     draft: {
       restored: "We restored your previous answers.",
@@ -355,12 +233,27 @@ export const en = {
     errors: {
       submit: "Something went wrong while sending your request. Please try again in a moment.",
     },
+    validation: {
+      fullName: "Please enter your full name.",
+      email: "Please enter a valid email address.",
+      phone: "Please enter a phone number we can reach you on.",
+      location: "Please tell us where the project is located.",
+      clientType: "Please choose the option that describes you best.",
+      projectTypes: "Please select at least one project type.",
+      description: "A few lines are enough, but please tell us a little more.",
+      consent: "Please confirm that we may contact you about your project.",
+      tooLong: "This text is too long.",
+      maxFiles: "You can attach up to {max} files.",
+      fileTooLarge: "{name} is larger than {max}.",
+      fileType: "{name} is not a supported file type.",
+    },
     steps: {
       contact: {
         title: ["Let's talk about", "your project"],
         intro:
           "Are you planning a new build, renovation or interior transformation? A few details will help us understand your project before our first conversation.",
-        aside: "We only need enough to prepare properly for a first exchange. Everything else can wait for the conversation itself.",
+        aside:
+          "We only need enough to prepare properly for a first exchange. Everything else can wait for the conversation itself.",
         fields: {
           fullName: "Full name",
           email: "Email",
@@ -375,13 +268,14 @@ export const en = {
             { value: "investor", label: "Investor", hint: "Airbnb, holiday rental, guesthouse, etc." },
             { value: "business", label: "Business / establishment", hint: "Hotel, restaurant, showroom, spa, etc." },
             { value: "other", label: "Other" },
-          ] satisfies ChoiceOption<ClientType>[],
+          ] satisfies ChoiceOption[],
         },
       },
       project: {
         title: ["Your project"],
         intro: "What kind of project are we looking at, and where does it take place?",
-        aside: "Select everything that applies. Many projects combine a renovation with bespoke joinery or a change of layout.",
+        aside:
+          "Select everything that applies. Many projects combine a renovation with bespoke joinery or a change of layout.",
         projectTypes: {
           question: "What type of project are you planning?",
           options: [
@@ -390,7 +284,7 @@ export const en = {
             { value: "transformation", label: "Transformation", hint: "Reconfiguration of an existing space" },
             { value: "bespoke", label: "Bespoke interiors", hint: "Furniture & joinery" },
             { value: "other", label: "Other" },
-          ] satisfies ChoiceOption<ProjectType>[],
+          ] satisfies ChoiceOption[],
         },
         propertyType: {
           question: "What type of property or space are you working on?",
@@ -401,7 +295,7 @@ export const en = {
             { value: "establishment", label: "Establishment", hint: "Hotel, restaurant, showroom, spa" },
             { value: "investment", label: "Rental or investment property" },
             { value: "other", label: "Other" },
-          ] satisfies ChoiceOption<PropertyType>[],
+          ] satisfies ChoiceOption[],
         },
         spaces: {
           label: "Which spaces are involved?",
@@ -411,8 +305,10 @@ export const en = {
       },
       vision: {
         title: ["Your project", "in a few words"],
-        intro: "There is no need for a finished brief. A first impression of what you are hoping for is all we need to start.",
-        aside: "Think about what is not working today, what you would like to feel in the space, and anything that must stay.",
+        intro:
+          "There is no need for a finished brief. A first impression of what you are hoping for is all we need to start.",
+        aside:
+          "Think about what is not working today, what you would like to feel in the space, and anything that must stay.",
         description: {
           label: "How would you describe your project and what are you hoping to achieve?",
           hint: "A few lines are enough to give us a first understanding of your project.",
@@ -427,7 +323,8 @@ export const en = {
       timeline: {
         title: ["Where are you", "today?"],
         intro: "Tell us about the current stage of your project and your timeline.",
-        aside: "Let us know where things stand today and, if you already have an idea, when you would like the project to be completed.",
+        aside:
+          "Let us know where things stand today and, if you already have an idea, when you would like the project to be completed.",
         stage: {
           question: "Current stage",
           options: [
@@ -437,7 +334,7 @@ export const en = {
             { value: "plans-available", label: "Plans available" },
             { value: "construction-started", label: "Construction started" },
             { value: "other", label: "Other" },
-          ] satisfies ChoiceOption<ProjectStage>[],
+          ] satisfies ChoiceOption[],
         },
         timing: {
           question: "Desired timing",
@@ -448,7 +345,7 @@ export const en = {
             { value: "6-12-months", label: "6 to 12 months" },
             { value: "12-plus", label: "More than 12 months" },
             { value: "not-sure", label: "Not sure yet" },
-          ] satisfies ChoiceOption<Timing>[],
+          ] satisfies ChoiceOption[],
         },
         details: {
           label: "Anything else about the stage or timing of your project?",
@@ -458,7 +355,8 @@ export const en = {
       documents: {
         title: ["Your", "documents"],
         intro: "You can attach any documents that may help us better understand your project.",
-        aside: "Existing plans, dimensioned plans, photographs, videos, inspiration images, sketches or any other relevant documents.",
+        aside:
+          "Existing plans, dimensioned plans, photographs, videos, inspiration images, sketches or any other relevant documents.",
         examples: ["Existing plans", "Dimensioned plans", "Photographs", "Videos", "Inspiration images", "Sketches"],
         dropzone: {
           title: "Drop files here or browse",
@@ -478,14 +376,14 @@ export const en = {
         intro: "Two short questions, then a quick look at what you are sending us.",
         aside: "You can go back to any step to adjust your answers before sending.",
         source: {
-          question: "How did you hear about Studio Portmix?",
+          question: "How did you hear about Studio PortMix?",
           options: [
             { value: "recommendation", label: "Recommendation" },
             { value: "search", label: "Google / search engine" },
             { value: "social", label: "Instagram / social media" },
-            { value: "portmix", label: "Portmix" },
+            { value: "portmix", label: "PortMix" },
             { value: "other", label: "Other" },
-          ] satisfies ChoiceOption<Source>[],
+          ] satisfies ChoiceOption[],
         },
         notes: {
           label: "Anything else you would like us to know?",
@@ -498,7 +396,7 @@ export const en = {
           attachmentsMany: "{count} files attached",
         },
         consent: {
-          label: "I agree that Studio Portmix may use the information provided to contact me regarding my project.",
+          label: "I agree that Studio PortMix may use the information provided to contact me regarding my project.",
           privacyLink: "Privacy Policy",
         },
       },
@@ -512,24 +410,30 @@ export const en = {
   },
 
   closing: {
+    index: "06",
+    label: "Contact",
+    meta: "Showroom by appointment",
     statement: ["Every project starts", "with a conversation."],
-    name: "Studio Portmix",
+    name: "Studio PortMix",
     discipline: "Interior architecture",
     contact: {
       email: "Email",
       phone: "Phone",
-      address: "Studio",
+      showroom: "Showroom",
+      showroomValue: "Echandens, Switzerland",
+      appointment: "Visits by appointment only",
       placeholder: "To be confirmed",
     },
+    cta: { label: "Start a project", href: "#project-inquiry" },
   },
 
   footer: {
-    wordmark: ["Studio", "Portmix"],
+    wordmark: ["Studio", "PortMix"],
     navigation: [
       { label: "Studio", href: "#studio" },
       { label: "Expertise", href: "#expertise" },
       { label: "Approach", href: "#approach" },
-      { label: "Projects", href: "#projects" },
+      { label: "Contact", href: "#contact" },
       { label: "Start a project", href: "#project-inquiry" },
     ] satisfies NavLink[],
     secondary: [
@@ -537,22 +441,22 @@ export const en = {
       { label: "Privacy", href: "/privacy" },
       { label: "Legal notice", href: "/legal" },
     ] satisfies NavLink[],
-    tagline: "A Portmix studio",
-    region: "Interior architecture, French-speaking Switzerland",
-    copyright: "© {year} Studio Portmix. All rights reserved.",
+    tagline: "A PortMix studio",
+    region: "Interior architecture, Echandens, Switzerland",
+    copyright: "© {year} Studio PortMix. All rights reserved.",
     backToTop: "Back to top",
   },
 
   legalPages: {
     privacy: {
       title: "Privacy policy",
-      intro: "This page will describe how Studio Portmix handles personal data submitted through this website.",
-      placeholder: "Content to be provided by Studio Portmix.",
+      intro: "This page will describe how Studio PortMix handles personal data submitted through this website.",
+      placeholder: "Content to be provided by Studio PortMix.",
     },
     legal: {
       title: "Legal notice",
-      intro: "Company information and legal details for Studio Portmix.",
-      placeholder: "Content to be provided by Studio Portmix.",
+      intro: "Company information and legal details for Studio PortMix.",
+      placeholder: "Content to be provided by Studio PortMix.",
     },
     back: "Back to studio",
   },
@@ -562,4 +466,4 @@ export const en = {
     body: "The address may have changed, or the page may have been moved.",
     cta: "Back to studio",
   },
-} as const;
+};

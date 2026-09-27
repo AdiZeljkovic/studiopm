@@ -3,7 +3,8 @@
  *
  * Every photograph on the site is referenced from here. All images are
  * currently Unsplash placeholders chosen for art direction only. They are
- * NOT Studio Portmix projects and are never presented as such in the UI.
+ * NOT Studio PortMix projects. Replace them with real photography as soon
+ * as it is available.
  *
  * To replace with real photography:
  *   1. Add files to /public/images/<section>/...
@@ -136,59 +137,8 @@ export const images = {
     ),
   },
 
-  spaces: {
-    residences: unsplash(
-      "1600607687939-ce8a6c25118c",
-      "Open-plan living room with a timber feature wall opening onto a terrace",
-      "4/3",
-      1800,
-    ),
-    apartments: unsplash(
-      "1600607687644-c7171b42498f",
-      "Minimal bedroom with grey textiles and a glazed door to the garden",
-      "4/5",
-      1600,
-    ),
-    secondHomes: unsplash(
-      "1616627561839-074385245ff6",
-      "Bedroom with plaster wall, oak bed and rust-coloured linen",
-      "4/5",
-      1600,
-    ),
-    hospitality: unsplash(
-      "1560624052-449f5ddf0c31",
-      "Restaurant interior with terrazzo floor and timber roof structure",
-      "16/9",
-      2000,
-    ),
-    restaurants: unsplash(
-      "1517248135467-4c7edcad34c4",
-      "Restaurant dining room with dark timber and warm lighting",
-      "4/5",
-      1600,
-    ),
-    hotels: unsplash(
-      "1566665797739-1674de7a421a",
-      "Hotel bedroom with timber slats and layered bedding",
-      "3/2",
-      1800,
-    ),
-    investment: unsplash(
-      "1631679706909-1844bbd07221",
-      "Bright neutral living room prepared for rental",
-      "4/3",
-      1600,
-    ),
-    professional: unsplash(
-      "1497366754035-f200968a6e72",
-      "Office corridor with steel-framed glass partitions",
-      "4/3",
-      1600,
-    ),
-  },
-
   architects: {
-    // TODO: replace with real portraits of the two Studio Portmix architects
+    // TODO: replace with real portraits of the two Studio PortMix architects
     // when supplied. Until then we only show working situations, never faces.
     main: unsplash(
       "1503387762-592deb58ef4e",
@@ -204,23 +154,12 @@ export const images = {
     ),
   },
 
-  heritage: unsplash(
-    "1481277542470-605612bd2d61",
-    "White double interior doors opening onto a pale oak floor",
+  approach: unsplash(
+    "1781888699751-15f2b304693c",
+    "Two people exchanging fabric and material samples across a table",
     "4/5",
     1600,
   ),
-
-  gallery: [
-    unsplash("1600607688066-890987f18a86", "Bathroom with marble walls and a floating oak vanity", "4/5", 1600),
-    unsplash("1549187774-b4e9b0445b41", "Cognac leather sofa in dappled afternoon light", "3/2", 1800),
-    unsplash("1507652313519-d4e9174996dd", "Freestanding bath in a concrete-walled bathroom with a palm", "1/1", 1600),
-    unsplash("1600566752355-35792bedcfea", "Dark bathroom with freestanding bath and slot window", "4/5", 1600),
-    unsplash("1600566753151-384129cf4e3e", "Living room opening through sliding glazing onto a pool terrace", "16/9", 2000),
-    unsplash("1585128792020-803d29415281", "Walnut sideboard on herringbone parquet in a bright room", "3/4", 1400),
-    unsplash("1524230572899-a752b3835840", "Sequence of white plaster arches and steps", "3/2", 1800),
-  ],
 } as const;
 
 export type ServiceImageKey = keyof typeof images.services;
-export type SpaceImageKey = keyof typeof images.spaces;

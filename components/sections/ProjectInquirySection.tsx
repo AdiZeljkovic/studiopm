@@ -1,16 +1,17 @@
-import type { Content } from "@/lib/i18n";
+import type { Content, Locale } from "@/lib/i18n";
 import { Container } from "@/components/ui/Container";
 import { ProjectInquiryForm } from "@/components/forms/project-inquiry/ProjectInquiryForm";
 
 interface ProjectInquirySectionProps {
   content: Content["inquiry"];
+  locale: Locale;
 }
 
-export function ProjectInquirySection({ content }: ProjectInquirySectionProps) {
+export function ProjectInquirySection({ content, locale }: ProjectInquirySectionProps) {
   return (
     <section id="project-inquiry" className="scroll-mt-16 border-t border-line lg:scroll-mt-20">
       <Container className="py-24 lg:py-36">
-        <ProjectInquiryForm content={content} privacyHref="/privacy" />
+        <ProjectInquiryForm content={content} locale={locale} privacyHref={`/${locale}/privacy`} />
       </Container>
     </section>
   );

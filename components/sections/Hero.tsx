@@ -52,7 +52,7 @@ export function Hero({ content }: HeroProps) {
         <div className="relative z-10 -mt-[24vh] -ml-5 max-w-[1180px] bg-ivory pt-8 pr-6 pl-5 sm:-ml-8 sm:pt-10 sm:pr-12 sm:pl-8 lg:-mt-[30vh] lg:-ml-12 lg:pt-14 lg:pr-20 lg:pl-12 2xl:-ml-16 2xl:pl-16">
           <Reveal onMount delay={0.5} y={12}>
             <p className="label flex flex-wrap items-center gap-x-4 gap-y-1 text-taupe">
-              <span className="text-ink">{content.eyebrow[0]}</span>
+              <span className="text-ink normal-case tracking-[0.03em]">{content.eyebrow[0]}</span>
               <span aria-hidden="true" className="h-px w-8 bg-line-strong" />
               <span>{content.eyebrow[1]}</span>
             </p>
@@ -71,21 +71,11 @@ export function Hero({ content }: HeroProps) {
             <Reveal onMount delay={1.1} className="col-span-12 lg:col-span-5">
               <p className="text-lede max-w-md text-ink/75">{content.intro}</p>
             </Reveal>
-            <Reveal onMount delay={1.2} className="col-span-12 sm:col-span-6 lg:col-span-3 lg:col-start-7">
-              <p className="label-sm text-taupe">{content.pillarsLabel}</p>
-              <ul className="mt-3 border-t border-line">
-                {content.pillars.map((item) => (
-                  <li key={item} className="border-b border-line py-2.5 text-[0.9375rem] leading-snug text-ink">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal onMount delay={1.3} className="col-span-12 sm:col-span-6 lg:col-span-3 lg:col-start-10">
+            <Reveal onMount delay={1.25} className="col-span-12 sm:col-span-9 lg:col-span-5 lg:col-start-8">
               <p className="label-sm text-taupe">{content.factsLabel}</p>
               <ul className="mt-3 border-t border-line">
                 {content.facts.map((item) => (
-                  <li key={item} className="border-b border-line py-2.5 text-[0.9375rem] leading-snug text-ink">
+                  <li key={item} className="border-b border-line py-3 text-[0.9375rem] leading-snug text-ink">
                     {item}
                   </li>
                 ))}
@@ -94,10 +84,10 @@ export function Hero({ content }: HeroProps) {
           </div>
 
           <Reveal onMount delay={1.45} className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 lg:mt-12">
-            <ArrowLink href={content.secondaryCta.href} variant="solid">
-              {content.secondaryCta.label}
+            <ArrowLink href={content.primaryCta.href} variant="brand">
+              {content.primaryCta.label}
             </ArrowLink>
-            <ArrowLink href={content.primaryCta.href}>{content.primaryCta.label}</ArrowLink>
+            <ArrowLink href={content.secondaryCta.href}>{content.secondaryCta.label}</ArrowLink>
           </Reveal>
         </div>
       </div>

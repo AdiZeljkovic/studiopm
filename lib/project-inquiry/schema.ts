@@ -30,36 +30,42 @@ export const attachmentSchema = z.object({
   url: z.string().optional(),
 });
 
+/**
+ * Validation messages are keys, translated in the UI through
+ * content.inquiry.validation so the schema stays locale-independent.
+ */
 export const projectInquirySchema = z.object({
+  locale: z.enum(["en", "fr"]).optional(),
+
   // 01 - Contact
-  fullName: z.string().trim().min(2, "Please enter your full name."),
-  email: z.email("Please enter a valid email address."),
-  phone: z.string().trim().min(6, "Please enter a phone number we can reach you on."),
-  location: z.string().trim().min(2, "Please tell us where the project is located."),
-  clientType: z.enum(clientTypes, { message: "Please choose the option that describes you best." }),
+  fullName: z.string().trim().min(2, "fullName"),
+  email: z.email("email"),
+  phone: z.string().trim().min(6, "phone"),
+  location: z.string().trim().min(2, "location"),
+  clientType: z.enum(clientTypes, { message: "clientType" }),
 
   // 02 - Project
-  projectTypes: checkboxList(projectTypes, "Please select at least one project type."),
+  projectTypes: checkboxList(projectTypes, "projectTypes"),
   propertyType: optionalEnum(propertyTypes),
-  spaces: optionalText(2000, "Please keep this under 2000 characters."),
+  spaces: optionalText(2000, "tooLong"),
 
   // 03 - Vision
-  description: z.string().trim().min(20, "A few lines are enough, but please tell us a little more."),
-  references: optionalText(3000, "Please keep this under 3000 characters."),
+  description: z.string().trim().min(20, "description"),
+  references: optionalText(3000, "tooLong"),
 
   // 04 - Timeline
   stage: optionalEnum(projectStages),
   timing: optionalEnum(timings),
-  timeline: optionalText(3000, "Please keep this under 3000 characters."),
+  timeline: optionalText(3000, "tooLong"),
 
   // 05 - Documents
-  attachments: z.array(attachmentSchema).max(10, "You can attach up to 10 files."),
+  attachments: z.array(attachmentSchema).max(10, "maxFiles"),
 
   // 06 - Finish
   source: optionalEnum(sources),
-  notes: optionalText(3000, "Please keep this under 3000 characters."),
+  notes: optionalText(3000, "tooLong"),
   consent: z.boolean().refine((v) => v === true, {
-    message: "Please confirm that we may contact you about your project.",
+    message: "consent",
   }),
 });
 

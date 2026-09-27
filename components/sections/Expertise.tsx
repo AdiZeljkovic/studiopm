@@ -15,13 +15,12 @@ import { Figure } from "@/components/ui/Figure";
 interface ExpertiseProps {
   content: Content["expertise"];
   images: Record<ServiceImageKey, SiteImage>;
-  inspirationLabel: string;
 }
 
 const hoverCapable = () =>
   typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-export function Expertise({ content, images, inspirationLabel }: ExpertiseProps) {
+export function Expertise({ content, images }: ExpertiseProps) {
   const [active, setActive] = useState(0);
   const services = content.services;
   const current = services[active] ?? services[0];
@@ -106,12 +105,6 @@ export function Expertise({ content, images, inspirationLabel }: ExpertiseProps)
                                   image={images[service.image]}
                                   ratio="4/3"
                                   sizes="(min-width: 640px) 80vw, 100vw"
-                                  caption={
-                                    <>
-                                      <span>{inspirationLabel}</span>
-                                      <span>{service.number}</span>
-                                    </>
-                                  }
                                 />
                               </div>
                             </div>
@@ -160,16 +153,6 @@ export function Expertise({ content, images, inspirationLabel }: ExpertiseProps)
                   </motion.span>
                 </AnimatePresence>
               </div>
-              <p className="label-sm mt-3 flex items-baseline justify-between text-taupe">
-                <span>
-                  <span className="text-brand">{current.number}</span>
-                  <span className="mx-2" aria-hidden="true">
-                    /
-                  </span>
-                  {current.title}
-                </span>
-                <span>{inspirationLabel}</span>
-              </p>
             </div>
           </div>
         </div>

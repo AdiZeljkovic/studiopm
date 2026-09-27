@@ -6,22 +6,28 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
+import type { Locale } from "@/lib/i18n";
+import type { NavLink } from "@/data/content/types";
 import { Logo } from "@/components/layout/Logo";
-import type { NavLink } from "@/data/content/en";
+import { LanguageSwitch } from "@/components/layout/LanguageSwitch";
 
 interface HeaderProps {
+  locale: Locale;
   links: readonly NavLink[];
   cta: NavLink;
-  labels: { openMenu: string; closeMenu: string; menu: string; close: string };
+  labels: { openMenu: string; closeMenu: string; menu: string; close: string; language: string };
   meta: readonly string[];
 }
 
-export function Header({ links, cta, labels, meta }: HeaderProps) {
+export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
+
+  const home = `/${locale}`;
+  const to = (hash: string) => `${home}${hash}`;
 
   // Header surface: transparent over the hero, translucent ivory afterwards.
   useEffect(() => {
@@ -67,7 +73,7 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
       document.body.style.overflow = previous;
       window.removeEventListener("keydown", onKey);
       window.clearTimeout(t);
-      toggle?.focus();
+      toggle?.focus({ preventScroll: true });
     };
   }, [open, close]);
 
@@ -80,8 +86,8 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
           : "border-b border-transparent bg-transparent",
       )}
     >
-      <div className="container-site flex h-16 items-center justify-between lg:h-20">
-        <Logo priority className="relative z-[60]" />
+      <div className="container-site flex h-16 items-center justify-between gap-4 lg:h-20">
+        <Logo href={home} priority className="relative z-[60]" />
 
         <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-8 xl:gap-10">
@@ -90,11 +96,11 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
               return (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={to(link.href)}
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
                       "link-underline text-[0.8125rem] tracking-[0.04em] transition-colors duration-500",
-                      isActive ? "text-brand [&::after]:scale-x-100" : "text-ink hover:text-ink",
+                      isActive ? "text-brand [&::after]:scale-x-100" : "text-ink",
                     )}
                   >
                     {link.label}
@@ -105,10 +111,11 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
           </ul>
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-8 lg:flex">
+          <LanguageSwitch locale={locale} label={labels.language} />
           <Link
-            href={cta.href}
-            className="group inline-flex items-center gap-3 border border-ink/25 px-5 py-2.5 label text-ink transition-colors duration-500 ease-[var(--ease-out-expo)] hover:border-ink hover:bg-ink hover:text-ivory"
+            href={to(cta.href)}
+            className="group label inline-flex items-center gap-3 bg-brand px-5 py-3 text-ivory transition-colors duration-500 ease-[var(--ease-out-expo)] hover:bg-ink"
           >
             <span>{cta.label}</span>
             <ArrowRight
@@ -119,31 +126,41 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
           </Link>
         </div>
 
-        <button
-          ref={toggleRef}
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="mobile-navigation"
-          aria-label={open ? labels.closeMenu : labels.openMenu}
-          className="relative z-[60] -mr-2 flex h-11 items-center gap-3 px-2 lg:hidden"
-        >
-          <span className="label">{open ? labels.close : labels.menu}</span>
-          <span aria-hidden="true" className="relative block h-3 w-6">
-            <span
-              className={cn(
-                "absolute left-0 top-0 h-px w-6 bg-ink transition-transform duration-500 ease-[var(--ease-out-expo)]",
-                open && "translate-y-[5.5px] rotate-45",
-              )}
-            />
-            <span
-              className={cn(
-                "absolute bottom-0 left-0 h-px w-6 bg-ink transition-transform duration-500 ease-[var(--ease-out-expo)]",
-                open && "-translate-y-[5.5px] -rotate-45",
-              )}
-            />
-          </span>
-        </button>
+        <div className="relative z-[60] flex items-center gap-4 lg:hidden">
+          {!open ? (
+            <Link
+              href={to(cta.href)}
+              className="label-sm inline-flex h-9 items-center bg-brand px-3 text-ivory"
+            >
+              {cta.label}
+            </Link>
+          ) : null}
+          <button
+            ref={toggleRef}
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            aria-label={open ? labels.closeMenu : labels.openMenu}
+            className="-mr-2 flex h-11 items-center gap-3 px-2"
+          >
+            <span className="label hidden sm:inline">{open ? labels.close : labels.menu}</span>
+            <span aria-hidden="true" className="relative block h-3 w-6">
+              <span
+                className={cn(
+                  "absolute left-0 top-0 h-px w-6 bg-ink transition-transform duration-500 ease-[var(--ease-out-expo)]",
+                  open && "translate-y-[5.5px] rotate-45",
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute bottom-0 left-0 h-px w-6 bg-ink transition-transform duration-500 ease-[var(--ease-out-expo)]",
+                  open && "-translate-y-[5.5px] -rotate-45",
+                )}
+              />
+            </span>
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -171,7 +188,7 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
                     >
                       <Link
                         ref={i === 0 ? firstLinkRef : undefined}
-                        href={link.href}
+                        href={to(link.href)}
                         onClick={close}
                         className="flex items-baseline justify-between py-5"
                       >
@@ -181,6 +198,7 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
                     </motion.li>
                   ))}
                 </ul>
+                <LanguageSwitch locale={locale} label={labels.language} className="mt-8" onNavigate={close} />
               </nav>
 
               <motion.div
@@ -191,9 +209,9 @@ export function Header({ links, cta, labels, meta }: HeaderProps) {
                 className="flex flex-col gap-8"
               >
                 <Link
-                  href={cta.href}
+                  href={to(cta.href)}
                   onClick={close}
-                  className="group inline-flex w-full items-center justify-between bg-ink px-6 py-5 label text-ivory"
+                  className="group label inline-flex w-full items-center justify-between bg-brand px-6 py-5 text-ivory"
                 >
                   <span>{cta.label}</span>
                   <ArrowRight aria-hidden="true" strokeWidth={1.5} className="size-4" />

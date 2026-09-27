@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/cn";
 import type { ProjectInquiry } from "@/lib/project-inquiry/schema";
-import type { ChoiceOption } from "@/data/content/en";
+import type { ChoiceOption } from "@/data/content/types";
 import { FieldLabel, FieldMessage } from "./FieldChrome";
 
 type ChoiceName = Extract<

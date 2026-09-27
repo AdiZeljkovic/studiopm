@@ -5,6 +5,7 @@ import { useController, useFormContext } from "react-hook-form";
 import { Upload, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { format } from "@/lib/i18n";
+import { useValidationMessages } from "../messages";
 import type { Attachment, ProjectInquiry } from "@/lib/project-inquiry/schema";
 import {
   ACCEPT_ATTRIBUTE,
@@ -14,6 +15,7 @@ import {
   getUploadAdapter,
   uploadMode,
   validateFile,
+  type FileProblem,
 } from "@/lib/project-inquiry/upload";
 import { FieldMessage } from "./FieldChrome";
 
@@ -41,6 +43,15 @@ export function FileDropzone({ labels }: FileDropzoneProps) {
   const [progress, setProgress] = useState<Record<string, number>>({});
   const [dragging, setDragging] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
+  const messages = useValidationMessages();
+  const describe = useCallback(
+    (problem: FileProblem) => {
+      const { code, ...values } = problem;
+      const template = messages?.[code];
+      return template ? format(template, values) : code;
+    },
+    [messages],
+  );
   const controllers = useRef(new Map<string, AbortController>());
   const adapter = useRef(getUploadAdapter());
 
@@ -80,7 +91,7 @@ export function FileDropzone({ labels }: FileDropzoneProps) {
       for (const file of Array.from(list)) {
         const problem = validateFile(file, current.length + additions.length);
         if (problem) {
-          setLocalError(problem);
+          setLocalError(describe(problem));
           continue;
         }
         additions.push({
@@ -92,7 +103,7 @@ export function FileDropzone({ labels }: FileDropzoneProps) {
       field.onChange([...current, ...additions.map((a) => a.attachment)]);
       additions.forEach(({ attachment, file }) => startUpload(attachment, file));
     },
-    [field, getValues, startUpload],
+    [describe, field, getValues, startUpload],
   );
 
   const remove = useCallback(

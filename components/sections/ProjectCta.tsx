@@ -23,7 +23,7 @@ export function ProjectCta({ content }: ProjectCtaProps) {
               <p className="mt-8 max-w-lg text-lede text-taupe">{content.body}</p>
             </Reveal>
             <Reveal delay={0.3}>
-              <ArrowLink href={content.cta.href} variant="solid" className="mt-12">
+              <ArrowLink href={content.cta.href} variant="brand" className="mt-12">
                 {content.cta.label}
               </ArrowLink>
             </Reveal>

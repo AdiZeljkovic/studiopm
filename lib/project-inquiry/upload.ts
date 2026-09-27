@@ -52,14 +52,20 @@ export function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function validateFile(file: File, existingCount: number): string | null {
-  if (existingCount >= MAX_FILES) return `You can attach up to ${MAX_FILES} files.`;
+export type FileProblem =
+  | { code: "maxFiles"; max: number }
+  | { code: "fileTooLarge"; name: string; max: string }
+  | { code: "fileType"; name: string };
+
+/** Returns a locale-independent problem description, or null when the file is accepted. */
+export function validateFile(file: File, existingCount: number): FileProblem | null {
+  if (existingCount >= MAX_FILES) return { code: "maxFiles", max: MAX_FILES };
   if (file.size > MAX_FILE_SIZE_BYTES) {
-    return `${file.name} is larger than ${formatFileSize(MAX_FILE_SIZE_BYTES)}.`;
+    return { code: "fileTooLarge", name: file.name, max: formatFileSize(MAX_FILE_SIZE_BYTES) };
   }
   const ext = `.${file.name.split(".").pop()?.toLowerCase() ?? ""}`;
   if (!(ACCEPTED_EXTENSIONS as readonly string[]).includes(ext)) {
-    return `${file.name} is not a supported file type.`;
+    return { code: "fileType", name: file.name };
   }
   return null;
 }

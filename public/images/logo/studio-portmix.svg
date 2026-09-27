@@ -1,10 +1,10 @@
 <!--
   PLACEHOLDER — NOT THE OFFICIAL LOGO.
-  Replace this file with the official Studio Portmix logo (same filename), or
+  Replace this file with the official Studio PortMix logo (same filename), or
   update the import in components/layout/Logo.tsx. Keep the viewBox proportions
   of the official artwork; the Logo component scales by height.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" width="340" height="96" role="img" aria-label="Studio Portmix">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" width="340" height="96" role="img" aria-label="Studio PortMix">
   <text x="0" y="30" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" letter-spacing="7" fill="#171614">STUDIO</text>
   <text x="0" y="84" font-family="Helvetica, Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="-1" fill="#C41E25">PortMix</text>
 </svg>

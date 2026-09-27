@@ -9,14 +9,10 @@ import { Figure } from "@/components/ui/Figure";
 
 interface ProcessProps {
   content: Content["process"];
-  inspirationLabel: string;
 }
 
-/**
- * Six steps laid out as an editorial grid: number, title, a fuller
- * description and a line saying what the step concretely involves.
- */
-export function Process({ content, inspirationLabel }: ProcessProps) {
+/** Six steps in an editorial grid, next to an image of client and architect at work. */
+export function Process({ content }: ProcessProps) {
   return (
     <section id="approach" className="scroll-mt-16 bg-sand lg:scroll-mt-20">
       <Container className="py-20 lg:py-32">
@@ -30,34 +26,11 @@ export function Process({ content, inspirationLabel }: ProcessProps) {
         />
 
         <div className="mt-16 grid grid-cols-12 gap-x-6 gap-y-14 lg:mt-24">
-          <aside className="col-span-12 sm:col-span-6 lg:col-span-4">
+          <aside className="col-span-12 sm:col-span-8 lg:col-span-4">
             <div className="lg:sticky lg:top-28">
               <ImageReveal>
-                <Figure
-                  image={images.architects.detail}
-                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
-                  caption={
-                    <>
-                      <span>{content.imageCaption}</span>
-                      <span>{inspirationLabel}</span>
-                    </>
-                  }
-                />
+                <Figure image={images.approach} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 66vw, 100vw" />
               </ImageReveal>
-              <Reveal delay={0.2}>
-                <p className="label-sm mt-10 text-taupe">{content.principlesLabel}</p>
-                <ol className="mt-3 border-t border-line-strong">
-                  {content.principles.map((principle, i) => (
-                    <li
-                      key={principle}
-                      className="flex items-baseline justify-between border-b border-line-strong py-3"
-                    >
-                      <span className="text-display-sm">{principle}</span>
-                      <span className="label-sm tabular-nums text-brand">0{i + 1}</span>
-                    </li>
-                  ))}
-                </ol>
-              </Reveal>
             </div>
           </aside>
 

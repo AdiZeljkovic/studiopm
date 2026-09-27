@@ -4,7 +4,7 @@ import { useWatch } from "react-hook-form";
 import { format } from "@/lib/i18n";
 import type { Content } from "@/lib/i18n";
 import type { ProjectInquiry } from "@/lib/project-inquiry/schema";
-import type { ChoiceOption } from "@/data/content/en";
+import type { ChoiceOption } from "@/data/content/types";
 
 interface SummaryProps {
   content: Content["inquiry"];

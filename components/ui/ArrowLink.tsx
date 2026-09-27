@@ -3,7 +3,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type Variant = "text" | "outline" | "solid";
+type Variant = "text" | "outline" | "solid" | "brand";
 type Tone = "dark" | "light";
 
 interface BaseProps {
@@ -45,6 +45,10 @@ const variants: Record<Variant, Record<Tone, string>> = {
   solid: {
     dark: "bg-ink px-7 py-4 text-ivory hover:bg-brand",
     light: "bg-ivory px-7 py-4 text-ink hover:bg-brand hover:text-ivory",
+  },
+  brand: {
+    dark: "bg-brand px-7 py-4 text-ivory hover:bg-ink",
+    light: "bg-brand px-7 py-4 text-ivory hover:bg-ivory hover:text-ink",
   },
 };
 

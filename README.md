@@ -1,6 +1,6 @@
-# Studio Portmix — website
+# Studio PortMix — website
 
-Editorial one-page website for Studio Portmix, an interior architecture studio in French-speaking Switzerland.
+Bilingual (English / French) one-page website for Studio PortMix, an interior architecture studio with a showroom in Echandens, Switzerland.
 Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, Framer Motion, React Hook Form and Zod.
 
 ## 1. Run the project
@@ -8,7 +8,7 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, Framer Motion, R
 ```bash
 npm install
 cp .env.example .env.local   # optional, see below
-npm run dev                  # http://localhost:3000
+npm run dev                  # http://localhost:3000 (redirects to /fr or /en)
 ```
 
 Production build and checks:
@@ -24,7 +24,7 @@ Node 20+ is required. Port 3000 is the default; use `npm run dev -- -p 3117` if 
 ## 2. Replace the stock images
 
 All photography is registered in one file: `data/images.ts`.
-Every entry is an Unsplash placeholder chosen for art direction. None are Studio Portmix projects and the UI labels them "Design inspiration" or "Reference imagery".
+Every entry is an Unsplash placeholder chosen for art direction. None are Studio PortMix projects. At the client's request the photos carry no captions, so replace them with the studio's own photography as soon as it exists.
 
 To swap in real photography:
 
@@ -32,13 +32,11 @@ To swap in real photography:
 2. Change the entry's `src` to the local path, update `alt`, and keep `ratio` in sync with the file so layouts do not shift.
 3. When no Unsplash URLs remain, delete the `remotePatterns` entry in `next.config.ts`.
 
-Once real project photos are used, remove the "Design inspiration" / "Reference imagery" captions and disclaimers in `data/content/en.ts` (keys `common.designInspiration`, `spaces.disclaimer`, `gallery.disclaimer`).
-
 The studio section deliberately shows working situations rather than stand-in portraits. Replace `images.architects` with real portraits when they are supplied (see the TODO in `components/sections/Studio.tsx`).
 
 ## 3. Replace contact details
 
-`lib/site-config.ts` holds every contact value. They are all `null` on purpose so nothing is invented:
+`lib/site-config.ts` holds every contact value. The showroom locality (Echandens) is known; email, phone, street address and Instagram are `null` until provided, so nothing is invented. The Contact menu item scrolls to this block (`#contact`).
 
 ```ts
 contact: {
@@ -54,7 +52,7 @@ Filling these in updates the closing section, the footer Instagram link and the 
 ## 4. Logo
 
 The logo is loaded from `public/images/logo/studio-portmix.svg` by `components/layout/Logo.tsx`.
-The file currently in that location is a clearly marked text placeholder: **replace it with the official Studio Portmix artwork under the same filename** (or update the import). The component scales by height, so any proportion works.
+The file currently in that location is a clearly marked text placeholder: **replace it with the official Studio PortMix artwork under the same filename** (or update the import). The component scales by height, so any proportion works.
 
 The brand red used across the site is `--color-brand` in `app/globals.css`. Match it to the exact red of the official logo file.
 
@@ -82,27 +80,29 @@ Attachment metadata (name, size, type, url) is then included in the inquiry payl
 
 Answers autosave to `localStorage` for two weeks (`lib/project-inquiry/draft.ts`) and are cleared on successful submission.
 
-## 6. Add translations
+## 6. Languages (English / French)
 
-All copy lives in `data/content/en.ts` as one typed dictionary; components never contain hard-coded text. `lib/i18n.ts` exposes `getContent(locale)`.
+The site is bilingual. Every page lives under `app/[locale]`, so the URLs are `/en`, `/fr`, `/en/privacy`, `/fr/legal`, and so on.
 
-To add French or German:
+- **Copy:** all text is in `data/content/en.ts` and `data/content/fr.ts`. Both files have exactly the same structure; TypeScript reports an error if a key is missing in French.
+- **Default language:** visiting `/` redirects to `/fr` or `/en` based on the browser language, with French as the fallback (`proxy.ts`, `defaultLocale` in `lib/i18n.ts`).
+- **Language switch:** EN / FR in the header and the mobile menu keeps the visitor on the equivalent page.
+- **Form messages:** validation errors in `lib/project-inquiry/schema.ts` are keys; their texts live under `inquiry.validation` in each content file. The selected language is sent with each inquiry as `locale`.
+- **Adding German later:** create `data/content/de.ts`, add `"de"` to `locales` and `localeLabels` in `lib/i18n.ts`, and register it in `dictionaries`.
 
-1. Copy `data/content/en.ts` to `fr.ts` / `de.ts` and translate the values (keep the structure).
-2. Register the file in `dictionaries` inside `lib/i18n.ts`.
-3. Introduce locale routing (for example `app/[locale]/…`) or a locale switcher, and pass the locale into `getContent()` where pages and the root layout call it.
-
-Validation messages in `lib/project-inquiry/schema.ts` are the one place with English strings outside the dictionary; move them into the content file when localising.
+Brand spelling is always **PortMix** with a capital M. Labels that contain the brand name opt out of the uppercase style so the capital M is kept.
 
 ## Project structure
 
 ```
-app/                     routes, metadata, API routes, sitemap, robots, icons
+app/[locale]/            localized routes: home, privacy, legal, not-found
+app/api/                 project inquiry and upload endpoints
+proxy.ts                 redirects / to the visitor's language
 components/layout/       Header (with mobile menu), Footer, Logo, SkipLink, LegalPage
-components/sections/     homepage sections: Hero, Studio, VisualBreak, Expertise, Advantage, Spaces, Process, Gallery, ProjectCta, ProjectInquirySection, Closing
+components/sections/     Hero, Studio, VisualBreak, Expertise, Advantage, Process, ProjectCta, ProjectInquirySection, Closing (in menu order)
 components/forms/        multi-step project questionnaire
 components/ui/           Container, Label, ArrowLink, Figure, Reveal, SplitLines, ImageReveal, SectionIntro
-data/                    content dictionary and image registry
+data/                    content dictionaries (en, fr) and image registry
 lib/                     site config, i18n helpers, motion tokens, inquiry schema / delivery / upload / draft
 public/images/logo/      logo file
 ```

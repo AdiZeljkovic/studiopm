@@ -2,14 +2,15 @@ import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import { format } from "@/lib/i18n";
-import type { Content } from "@/lib/i18n";
+import type { Content, Locale } from "@/lib/i18n";
 import { Container } from "@/components/ui/Container";
 
 interface FooterProps {
   content: Content["footer"];
+  locale: Locale;
 }
 
-export function Footer({ content }: FooterProps) {
+export function Footer({ content, locale }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
@@ -17,14 +18,14 @@ export function Footer({ content }: FooterProps) {
       <Container className="pt-20 pb-10 lg:pt-28 lg:pb-12">
         <div aria-hidden="true" className="mb-10 h-px w-12 bg-brand" />
 
-        <p className="text-display-xl uppercase leading-[0.9] tracking-[-0.03em]">
+        <p className="text-display-xl leading-[0.9] tracking-[-0.035em]">
           <span className="block">{content.wordmark[0]}</span>
           <span className="block">{content.wordmark[1]}</span>
         </p>
 
         <div className="mt-16 grid grid-cols-12 gap-x-6 gap-y-12 border-t border-line-dark pt-10 lg:mt-24">
           <div className="col-span-12 lg:col-span-5">
-            <p className="label text-ivory/60">{content.tagline}</p>
+            <p className="label text-ivory/60 normal-case tracking-[0.03em]">{content.tagline}</p>
             <p className="mt-4 max-w-xs text-body text-ivory/60">{content.region}</p>
           </div>
 
@@ -32,7 +33,7 @@ export function Footer({ content }: FooterProps) {
             <ul className="flex flex-col gap-3">
               {content.navigation.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="link-underline text-[0.9375rem] text-ivory/90">
+                  <Link href={`/${locale}${link.href}`} className="link-underline text-[0.9375rem] text-ivory/90">
                     {link.label}
                   </Link>
                 </li>
@@ -66,7 +67,7 @@ export function Footer({ content }: FooterProps) {
               }
               return (
                 <li key={link.href}>
-                  <Link href={link.href} className="link-underline text-[0.9375rem] text-ivory/90">
+                  <Link href={`/${locale}${link.href}`} className="link-underline text-[0.9375rem] text-ivory/90">
                     {link.label}
                   </Link>
                 </li>
@@ -76,7 +77,7 @@ export function Footer({ content }: FooterProps) {
         </div>
 
         <div className="mt-16 flex flex-col-reverse items-start justify-between gap-6 border-t border-line-dark pt-6 sm:flex-row sm:items-center">
-          <p className="label-sm text-ivory/50">{format(content.copyright, { year })}</p>
+          <p className="label-sm text-ivory/50 normal-case tracking-[0.03em]">{format(content.copyright, { year })}</p>
           <a
             href="#top"
             className="group label-sm inline-flex items-center gap-3 text-ivory/70 transition-colors hover:text-ivory"

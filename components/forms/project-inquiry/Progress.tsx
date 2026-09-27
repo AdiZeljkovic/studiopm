@@ -9,11 +9,12 @@ interface ProgressProps {
   step: number;
   names: readonly string[];
   onJump: (index: number) => void;
+  navLabel: string;
 }
 
 export const pad = (n: number) => String(n).padStart(2, "0");
 
-export function Progress({ eyebrow, step, names, onJump }: ProgressProps) {
+export function Progress({ eyebrow, step, names, onJump, navLabel }: ProgressProps) {
   const total = names.length;
   return (
     <div>
@@ -25,7 +26,7 @@ export function Progress({ eyebrow, step, names, onJump }: ProgressProps) {
             <span className="text-taupe-light"> / {pad(total)}</span>
           </p>
         </div>
-        <nav aria-label="Questionnaire steps" className="hidden md:block">
+        <nav aria-label={navLabel} className="hidden md:block">
           <ol className="flex gap-6 lg:gap-8">
             {names.map((name, i) => {
               const state = i === step ? "current" : i < step ? "done" : "todo";
