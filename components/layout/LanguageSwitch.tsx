@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { localeLabels, locales, type Locale } from "@/lib/i18n";
@@ -12,7 +11,14 @@ interface LanguageSwitchProps {
   onNavigate?: () => void;
 }
 
-/** EN / FR toggle that keeps the visitor on the equivalent page. */
+/**
+ * EN / FR toggle that keeps the visitor on the equivalent page.
+ *
+ * Uses a plain anchor on purpose: a language change swaps the root layout
+ * (html lang, every text), and Next's client navigation would then scroll to
+ * the first changed segment instead of the top. A full load always opens the
+ * other language at the top of the page.
+ */
 export function LanguageSwitch({ locale, label, className, onNavigate }: LanguageSwitchProps) {
   const pathname = usePathname() ?? `/${locale}`;
   const rest = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, "");
@@ -31,7 +37,7 @@ export function LanguageSwitch({ locale, label, className, onNavigate }: Languag
               {localeLabels[l].short}
             </span>
           ) : (
-            <Link
+            <a
               href={`/${l}${rest}`}
               hrefLang={l}
               lang={l}
@@ -40,7 +46,7 @@ export function LanguageSwitch({ locale, label, className, onNavigate }: Languag
               className="text-taupe transition-colors duration-300 hover:text-ink"
             >
               {localeLabels[l].short}
-            </Link>
+            </a>
           )}
         </span>
       ))}
