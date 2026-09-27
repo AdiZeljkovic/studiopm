@@ -7,7 +7,6 @@ import { VisualBreak } from "@/components/sections/VisualBreak";
 import { Expertise } from "@/components/sections/Expertise";
 import { Advantage } from "@/components/sections/Advantage";
 import { Process } from "@/components/sections/Process";
-import { ProjectCta } from "@/components/sections/ProjectCta";
 import { ProjectInquirySection } from "@/components/sections/ProjectInquirySection";
 import { Closing } from "@/components/sections/Closing";
 
@@ -16,7 +15,7 @@ import { Closing } from "@/components/sections/Closing";
  *  01 Studio      who we are, our interior architects, for whom, showroom
  *  02 Expertise   services, then Design & joinery (the PortMix difference)
  *  04 Approach    six steps
- *  05 Start       questionnaire
+ *  05 Start       invitation + questionnaire
  *  06 Contact     coordinates
  */
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
@@ -32,8 +31,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <Expertise content={t.expertise} images={images.services} />
       <Advantage content={t.advantage} />
       <Process content={t.process} />
-      <ProjectCta content={t.projectCta} />
-      <ProjectInquirySection content={t.inquiry} locale={locale} />
+      <ProjectInquirySection intro={t.projectCta} content={t.inquiry} locale={locale} />
       <Closing content={t.closing} />
     </>
   );

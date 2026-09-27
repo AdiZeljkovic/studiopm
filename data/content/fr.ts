@@ -209,7 +209,6 @@ export const fr: Content = {
     meta: "Un premier échange",
     title: ["Vous avez un espace", "en tête ?"],
     body: "Dites-nous où vous en êtes aujourd’hui. Nous prendrons le temps de comprendre où vous souhaitez aller.",
-    cta: { label: "Parlez-nous de votre projet", href: "#project-inquiry" },
   },
 
   inquiry: {

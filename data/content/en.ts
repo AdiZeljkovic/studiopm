@@ -211,7 +211,6 @@ export const en = {
     meta: "A first conversation",
     title: ["Have a space", "in mind?"],
     body: "Tell us where you are today. We will take the time to understand where you want to go.",
-    cta: { label: "Tell us about your project", href: "#project-inquiry" },
   },
 
   inquiry: {
