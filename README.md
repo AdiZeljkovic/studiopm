@@ -51,10 +51,10 @@ Filling these in updates the closing section, the footer Instagram link and the 
 
 ## 4. Logo
 
-The logo is loaded from `public/images/logo/studio-portmix.svg` by `components/layout/Logo.tsx`.
-The file currently in that location is a clearly marked text placeholder: **replace it with the official Studio PortMix artwork under the same filename** (or update the import). The component scales by height, so any proportion works.
+The official logo is `public/images/logo/studio-portmix.png`, cropped from the supplied PortMix-Studio-logo.png, and is rendered by `components/layout/Logo.tsx`.
+For sharper rendering on large screens, an SVG export of the logo can replace the PNG (update the import in `Logo.tsx`).
 
-The brand red used across the site is `--color-brand` in `app/globals.css`. Match it to the exact red of the official logo file.
+The brand red used across the site is `--color-brand` in `app/globals.css`. It is sampled from the logo's red gradient.
 
 Favicons (`app/favicon.ico`, `app/icon.png`, `app/apple-icon.png`) are neutral placeholders to replace as well.
 

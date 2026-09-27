@@ -77,7 +77,7 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
         open ? "border-b border-transparent bg-ivory" : "border-b border-line/80 bg-ivory/90 backdrop-blur-md",
       )}
     >
-      <div className="container-site flex h-16 items-center justify-between gap-4 lg:h-20">
+      <div className="container-site flex h-[72px] items-center justify-between gap-4 lg:h-24">
         <Logo href={home} priority className="relative z-[60]" />
 
         <nav aria-label="Primary" className="hidden lg:block">
@@ -117,11 +117,11 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
           </Link>
         </div>
 
-        <div className="relative z-[60] flex items-center gap-4 lg:hidden">
+        <div className="relative z-[60] flex items-center gap-2 sm:gap-4 lg:hidden">
           {!open ? (
             <Link
               href={to(cta.href)}
-              className="label-sm inline-flex h-9 items-center bg-brand px-3 text-ivory"
+              className="label-sm inline-flex h-9 items-center whitespace-nowrap bg-brand px-2.5 tracking-[0.12em] text-ivory sm:px-3 sm:tracking-[0.2em]"
             >
               {cta.label}
             </Link>

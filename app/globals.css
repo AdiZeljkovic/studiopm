@@ -18,8 +18,8 @@
   --color-line: #d9d2c7;
   --color-line-strong: #bcb3a6;
   --color-line-dark: #35322e;
-  --color-brand: #c41e25; /* TODO: match exactly to the supplied logo */
-  --color-brand-deep: #a3161c;
+  --color-brand: #d11c24; /* sampled from the official logo gradient */
+  --color-brand-deep: #a81c22;
 
   --font-sans: var(--font-geist-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-serif: var(--font-instrument-serif), "Times New Roman", Georgia, serif;
@@ -32,8 +32,9 @@
 
 @layer base {
   html {
+    overflow-x: clip;
     color-scheme: light;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
 

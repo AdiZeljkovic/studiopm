@@ -16,7 +16,7 @@ export function Closing({ content }: ClosingProps) {
   const placeholder = <span className="text-taupe-light">{content.contact.placeholder}</span>;
 
   return (
-    <section id="contact" className="scroll-mt-16 bg-ivory-light lg:scroll-mt-20">
+    <section id="contact" className="scroll-mt-[72px] bg-ivory-light lg:scroll-mt-24">
       <Container className="py-20 lg:py-32">
         <Reveal y={0}>
           <SectionFolio index={content.index} label={content.label} meta={content.meta} />

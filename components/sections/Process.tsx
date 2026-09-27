@@ -14,7 +14,7 @@ interface ProcessProps {
 /** Six steps in an editorial grid, next to an image of client and architect at work. */
 export function Process({ content }: ProcessProps) {
   return (
-    <section id="approach" className="scroll-mt-16 bg-sand lg:scroll-mt-20">
+    <section id="approach" className="scroll-mt-[72px] bg-sand lg:scroll-mt-24">
       <Container className="py-20 lg:py-32">
         <SectionIntro
           index={content.index}

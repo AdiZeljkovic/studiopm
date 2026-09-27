@@ -32,7 +32,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
   }, []);
 
   return (
-    <section id="expertise" className="scroll-mt-16 lg:scroll-mt-20">
+    <section id="expertise" className="scroll-mt-[72px] lg:scroll-mt-24">
       <Container className="py-24 lg:py-36">
         <SectionIntro
           index={content.index}

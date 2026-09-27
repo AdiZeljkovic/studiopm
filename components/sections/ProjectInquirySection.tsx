@@ -9,7 +9,7 @@ interface ProjectInquirySectionProps {
 
 export function ProjectInquirySection({ content, locale }: ProjectInquirySectionProps) {
   return (
-    <section id="project-inquiry" className="scroll-mt-16 border-t border-line lg:scroll-mt-20">
+    <section id="project-inquiry" className="scroll-mt-[72px] border-t border-line lg:scroll-mt-24">
       <Container className="py-24 lg:py-36">
         <ProjectInquiryForm content={content} locale={locale} privacyHref={`/${locale}/privacy`} />
       </Container>

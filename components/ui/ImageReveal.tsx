@@ -25,7 +25,7 @@ export function ImageReveal({
   const visible = "inset(0 0 0 0)";
   return (
     <motion.div
-      className={cn("relative", className)}
+      className={cn("relative overflow-hidden", className)}
       initial={{ clipPath: hidden }}
       {...(onMount
         ? { animate: { clipPath: visible } }

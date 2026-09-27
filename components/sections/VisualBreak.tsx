@@ -9,7 +9,7 @@ interface VisualBreakProps {
 
 export function VisualBreak({ content }: VisualBreakProps) {
   return (
-    <section aria-label={content.label}>
+    <section aria-label={content.label} className="overflow-hidden">
       <ImageReveal className="w-full">
         <div className="relative aspect-[4/3] w-full bg-sand sm:aspect-[16/9] lg:aspect-[21/9]">
           <Image

@@ -19,7 +19,7 @@ interface StudioProps {
 export function Studio({ content }: StudioProps) {
   const { team, audience, showroom } = content;
   return (
-    <section id="studio" className="scroll-mt-16 lg:scroll-mt-20">
+    <section id="studio" className="scroll-mt-[72px] lg:scroll-mt-24">
       <Container className="pt-20 pb-24 lg:pt-28 lg:pb-32">
         <Reveal y={0}>
           <SectionFolio index={content.index} label={content.label} meta={content.meta} />
