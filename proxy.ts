@@ -2,8 +2,12 @@ import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, locales, type Locale } from "@/lib/i18n";
 
 /**
- * Sends visitors without a locale in the URL to /en or /fr, based on the
- * browser's Accept-Language header (French by default).
+ * 1. Protects the newsletter editor (/newsletter, /api/newsletter/*) with
+ *    HTTP basic auth: NEWSLETTER_USER (default "portmix") and
+ *    NEWSLETTER_PASSWORD. Without a password the editor is open in
+ *    development and disabled in production.
+ * 2. Sends visitors without a locale in the URL to /en or /fr, based on
+ *    the browser's Accept-Language header (French by default).
  */
 function preferredLocale(request: NextRequest): Locale {
   const header = request.headers.get("accept-language") ?? "";
@@ -19,8 +23,40 @@ function preferredLocale(request: NextRequest): Locale {
   return (match?.lang as Locale | undefined) ?? defaultLocale;
 }
 
+function newsletterAuth(request: NextRequest) {
+  const password = process.env.NEWSLETTER_PASSWORD;
+  const user = process.env.NEWSLETTER_USER ?? "portmix";
+
+  if (!password) {
+    if (process.env.NODE_ENV === "production") {
+      return new NextResponse("Newsletter editor disabled: set NEWSLETTER_PASSWORD.", { status: 503 });
+    }
+    return NextResponse.next();
+  }
+
+  const header = request.headers.get("authorization") ?? "";
+  if (header.startsWith("Basic ")) {
+    try {
+      const [u, ...rest] = atob(header.slice(6)).split(":");
+      if (u === user && rest.join(":") === password) return NextResponse.next();
+    } catch {
+      // fall through to the challenge
+    }
+  }
+  return new NextResponse("Authentication required", {
+    status: 401,
+    headers: { "WWW-Authenticate": 'Basic realm="Studio PortMix newsletter", charset="UTF-8"' },
+  });
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname === "/newsletter" || pathname.startsWith("/newsletter/") || pathname.startsWith("/api/newsletter")) {
+    return newsletterAuth(request);
+  }
+  if (pathname.startsWith("/api/")) return;
+
   const hasLocale = locales.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`));
   if (hasLocale) return;
 
@@ -30,7 +66,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Skip Next internals, API routes and any file with an extension
-  // (icons, images, robots.txt, sitemap.xml, ...).
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  // Skip Next internals and any file with an extension (images, icons,
+  // email assets, robots.txt, sitemap.xml, ...). Email assets must stay public.
+  matcher: ["/((?!_next|.*\\..*).*)"],
 };

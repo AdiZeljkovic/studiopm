@@ -91,12 +91,32 @@ The site is bilingual. Every page lives under `app/[locale]`, so the URLs are `/
 
 Brand spelling is always **PortMix** with a capital M. Labels that contain the brand name opt out of the uppercase style so the capital M is kept.
 
+## 7. Newsletter editor
+
+A private editor for the studio's newsletters lives at **`/newsletter`**. It offers three templates based on the client mockups (Classique, Nuit, Sable) in French or English, with a live desktop and mobile preview.
+
+**Access:** HTTP basic auth, user `NEWSLETTER_USER` (default `portmix`) and password `NEWSLETTER_PASSWORD`. Without a password the editor is open in development and disabled in production.
+
+**Workflow for the client:**
+1. Choose a template and language, then edit the texts, buttons, links and photos. Photos come from the client's Unsplash selection and the PortMix photos, or any `https://` image address.
+2. Drafts save automatically in the browser. Use **Exporter / Importer** to move a draft to another computer.
+3. **Copier HTML** or **Télécharger HTML**, then paste it into the sending platform (Brevo, Mailchimp, ...) as a custom HTML campaign. The platform handles the subscriber list, consent and unsubscribes.
+4. Set the unsubscribe merge tag in the footer section to the platform's tag: Brevo `{{ unsubscribe }}`, Mailchimp `*|UNSUB|*`.
+
+**Before the first real send:**
+- Set `NEXT_PUBLIC_NEWSLETTER_ASSET_BASE` to the live site address (e.g. `https://www.studio-portmix.ch`). Emails load the logo, icons and PortMix photos from there. The editor shows a warning while it still points to localhost.
+- Confirm the footer contact lines. `info@studio-portmix.ch` and `www.studio-portmix.ch` come from the mockups and are editable per newsletter.
+- Optional: set `RESEND_API_KEY` and `NEWSLETTER_FROM` to enable **Envoyer un test**, which sends one test email (`app/api/newsletter/send/route.ts`).
+
+**Code:** `lib/newsletter/` holds the data model, default copy, templates, the email HTML renderer (600px tables, inline styles, Outlook fallbacks) and draft storage. `components/newsletter/` holds the editor UI. Email logos and icons are PNGs in `public/email-assets/`, since many email clients do not display SVG.
+
 ## Project structure
 
 ```
 app/[locale]/            localized routes: home, privacy, legal, not-found
-app/api/                 project inquiry and upload endpoints
-proxy.ts                 redirects / to the visitor's language
+app/api/                 project inquiry, upload and newsletter test endpoints
+app/newsletter/           newsletter editor (own root layout)
+proxy.ts                 language redirect and newsletter editor protection
 components/layout/       Header (with mobile menu), Footer, Logo, SkipLink, LegalPage
 components/sections/     Hero, Studio, VisualBreak, Expertise, Advantage, Process, ProjectCta, ProjectInquirySection, Closing (in menu order)
 components/forms/        multi-step project questionnaire
