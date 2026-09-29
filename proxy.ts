@@ -63,6 +63,13 @@ export function proxy(request: NextRequest) {
    * Uhvaćeno 29.9.2026.: takva adresa se lako napravi rukom ili iz linka koji
    * već završava kosom crtom. Zato se višestruke crte sažimaju prije svega
    * ostalog — i prije provjere lozinke, da se prijava ne traži dvaput.
+   *
+   * ⚠️ Iza obrnutog posrednika ovo se NEĆE okinuti: Traefik sam sažme crte
+   * prije prosljedđivanja, pa Next dobije već uredan `/newsletter` i vrati
+   * 200 — dok preglednik u adresnoj traci i dalje ima `//` i njegov ruter
+   * pukne. Tamo se ne može popraviti sa servera; ispravna adresa je jedini
+   * lijek. Ovo štiti razvoj i svako posluživanje bez posrednika (provjereno:
+   * direktno kontejneru `//newsletter` → 308 na `/newsletter`).
    */
   if (pathname.startsWith("//")) {
     const url = request.nextUrl.clone();
