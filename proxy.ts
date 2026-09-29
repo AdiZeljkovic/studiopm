@@ -52,6 +52,24 @@ function newsletterAuth(request: NextRequest) {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  /**
+   * 🚨 Dvostruka kosa crta ruši cijelu aplikaciju.
+   *
+   * `//newsletter` preglednik čita kao adresu SA DRUGE DOMENE (protokolu
+   * relativnu), pa Nextov ruter pri prvom `replaceState` dobije
+   * `https://newsletter/` i baci `SecurityError`. Posjetilac vidi „This page
+   * couldn't load“ — bez ijedne poruke sa servera, jer je sam odgovor bio 200.
+   *
+   * Uhvaćeno 29.9.2026.: takva adresa se lako napravi rukom ili iz linka koji
+   * već završava kosom crtom. Zato se višestruke crte sažimaju prije svega
+   * ostalog — i prije provjere lozinke, da se prijava ne traži dvaput.
+   */
+  if (pathname.startsWith("//")) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace(/\/{2,}/g, "/");
+    return NextResponse.redirect(url, 308);
+  }
+
   if (pathname === "/newsletter" || pathname.startsWith("/newsletter/") || pathname.startsWith("/api/newsletter")) {
     return newsletterAuth(request);
   }
