@@ -21,18 +21,17 @@ npx tsc --noEmit
 
 Node 20+ is required. Port 3000 is the default; use `npm run dev -- -p 3117` if it is taken.
 
-## 2. Replace the stock images
+## 2. Images
 
 All photography is registered in one file: `data/images.ts`.
-Every entry is an Unsplash placeholder chosen for art direction. None are Studio PortMix projects. At the client's request the photos carry no captions, so replace them with the studio's own photography as soon as it exists.
 
-To swap in real photography:
+- **PortMix work:** the Design & joinery section uses two photos of real PortMix joinery (Immeuble Prilly), stored in `public/images/portmix/`. A third photo from the same set, `prilly-window-joinery.jpg`, is available but not used yet.
+- **Client selection:** the other images come from the client's Unsplash collection [Site internet](https://unsplash.com/collections/FA6LoMnzhog/Site-internet), except the Approach image (client and architect with samples).
+- At the client's request the photos carry no captions.
 
-1. Put the files in `public/images/<section>/`.
-2. Change the entry's `src` to the local path, update `alt`, and keep `ratio` in sync with the file so layouts do not shift.
-3. When no Unsplash URLs remain, delete the `remotePatterns` entry in `next.config.ts`.
+To swap an image, change its `src` (a local path such as `/images/portmix/file.jpg`, or an Unsplash photo id), update `alt`, and keep `ratio` in sync with the file so layouts do not shift. The Unsplash `remotePatterns` entry in `next.config.ts` can be removed once no remote images remain.
 
-The studio section deliberately shows working situations rather than stand-in portraits. Replace `images.architects` with real portraits when they are supplied (see the TODO in `components/sections/Studio.tsx`).
+The studio section shows working situations rather than portraits. Replace `images.architects` with real portraits when they are supplied (see the TODO in `components/sections/Studio.tsx`).
 
 ## 3. Replace contact details
 

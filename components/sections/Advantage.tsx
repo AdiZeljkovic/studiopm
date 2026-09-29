@@ -27,11 +27,11 @@ export function Advantage({ content }: AdvantageProps) {
         <div className="mt-16 grid grid-cols-12 gap-x-6 gap-y-20 lg:mt-28">
           <div className="relative col-span-12 pb-16 sm:col-span-10 lg:col-span-6 lg:pb-24">
             <ImageReveal>
-              <Figure image={images.advantage.main} sizes="(min-width: 1024px) 45vw, (min-width: 640px) 80vw, 100vw" />
+              <Figure image={images.advantage.main} ratio="4/5" sizes="(min-width: 1024px) 45vw, (min-width: 640px) 80vw, 100vw" />
             </ImageReveal>
             <div className="absolute right-0 bottom-0 w-[44%] border-[6px] border-ink sm:w-[38%] lg:-right-16 lg:w-[40%]">
               <Reveal delay={0.35}>
-                <Figure image={images.advantage.detail} sizes="(min-width: 1024px) 18vw, 40vw" />
+                <Figure image={images.advantage.detail} ratio="3/4" sizes="(min-width: 1024px) 18vw, 40vw" />
               </Reveal>
             </div>
           </div>

@@ -1,12 +1,14 @@
 /**
  * Central image registry.
  *
- * Every photograph on the site is referenced from here. All images are
- * currently Unsplash placeholders chosen for art direction only. They are
- * NOT Studio PortMix projects. Replace them with real photography as soon
- * as it is available.
+ * Every photograph on the site is referenced from here.
+ *  - Local files in /public/images/portmix are real PortMix work
+ *    (interior doors and joinery, Immeuble Prilly), supplied by the client.
+ *  - Unsplash images were selected by the client in the collection
+ *    https://unsplash.com/collections/FA6LoMnzhog/Site-internet
+ *    (except the approach image, chosen to show client and architect at work).
  *
- * To replace with real photography:
+ * To replace an image:
  *   1. Add files to /public/images/<section>/...
  *   2. Change `src` to the local path (e.g. "/images/hero/living-room.jpg")
  *   3. Keep `ratio` in sync with the new file so layouts do not shift.
@@ -55,100 +57,102 @@ function unsplash(id: string, alt: string, ratio: ImageRatio, width = 2400): Sit
   };
 }
 
+function local(src: string, alt: string, ratio: ImageRatio): SiteImage {
+  return { src, alt, ratio, source: "local" };
+}
+
 export const images = {
   hero: unsplash(
-    "1600607687920-4e2a09cf159d",
-    "Dining space with a concrete wall, open staircase, oak floor and floor-to-ceiling glazing",
+    "1762545112336-646c69e4888b",
+    "Living room with a wood stove, leather armchairs and large windows onto the forest",
     "16/9",
     2800,
   ),
 
   manifesto: unsplash(
-    "1501045661006-fcebe0257c3f",
-    "Leather and steel armchair against a plaster wall, lit by a side window",
+    "1772442364639-20fe5e5438a1",
+    "Sunlight crossing a dining room with timber shelving and upholstered chairs",
     "4/5",
     1600,
   ),
 
   visualBreak: unsplash(
-    "1600585154084-4e5fe7c39198",
-    "Living room with a timber-clad wall, stone fireplace and glazing onto a deck",
+    "1760072513357-9d450e935a80",
+    "Living room with a floor-to-ceiling library, timber ceiling and lounge seating",
     "21/9",
     2800,
   ),
 
   services: {
     analysis: unsplash(
-      "1605774337664-7a846e9cdf17",
-      "Calm living room with a low sofa, oak table and neutral textiles",
+      "1781249144049-dc1f8a2f5292",
+      "Living room with sofa, window and a round pendant lamp",
       "4/5",
       1600,
     ),
     architecture: unsplash(
-      "1618219908412-a29a1bb7b86e",
-      "Interior with timber-clad ceiling and herringbone parquet",
+      "1682418460590-3a0105848ea2",
+      "Corridor lined with flush built-in wardrobes and a herringbone floor",
       "4/5",
       1600,
     ),
     visualization: unsplash(
-      "1616628188859-7a11abb6fcc9",
-      "Hand sketching layouts on paper cards",
+      "1721630175454-0ca4517bb530",
+      "Rendered living space with a plaster arch, white sofa and flowering branches",
       "4/5",
       1600,
     ),
     materials: unsplash(
-      "1616627561950-9f746e330187",
-      "Lime plaster wall with oak bed frame and striped linen",
+      "1787676560679-c6aefbac8767",
+      "Sculptural objects on dark shelving beside a marble fireplace surround",
       "4/5",
       1600,
     ),
     bespoke: unsplash(
-      "1622372738946-62e02505feb3",
-      "Dark bespoke kitchen joinery with oak fronts and a glass cabinet",
+      "1682418460503-fe7ee0513023",
+      "Bespoke white wardrobe wall with an oak-lined seating niche",
       "4/5",
       1600,
     ),
     coordination: unsplash(
-      "1502005229762-cf1b2da7c5d6",
-      "Open staircase with timber treads in a double-height interior",
+      "1761330439781-7919703f17ef",
+      "Entrance with built-in wine storage, timber ceiling and a floating cabinet",
       "4/5",
       1600,
     ),
     implementation: unsplash(
-      "1600585152220-90363fe7e115",
-      "Kitchen with oak cabinetry, white island and pendant lighting",
+      "1765371512707-9e0e96fd9e5b",
+      "Room clad in oak panelling with integrated lighting and tall windows",
       "4/5",
       1600,
     ),
   },
 
   advantage: {
-    main: unsplash(
-      "1533044309907-0fa3413da946",
-      "Close-up of a dry-stone interior wall beside glazing and a woven chair",
-      "3/4",
-      1800,
+    // Real PortMix work: oak entrance door and frame, Immeuble Prilly.
+    main: local(
+      "/images/portmix/prilly-entrance-door.jpg",
+      "Oak entrance door set in a concrete stairwell, with an integrated light in the frame",
+      "2/3",
     ),
-    detail: unsplash(
-      "1540932239986-30128078f3c5",
-      "Cluster of brass pendant lights against a grey wall",
-      "3/4",
-      1200,
+    detail: local(
+      "/images/portmix/prilly-door-frame-detail.jpg",
+      "Detail of an oak door frame with concealed lighting",
+      "2/3",
     ),
   },
 
   architects: {
-    // TODO: replace with real portraits of the two Studio PortMix architects
-    // when supplied. Until then we only show working situations, never faces.
+    // TODO: replace with real portraits of the Studio PortMix interior architects.
     main: unsplash(
-      "1503387762-592deb58ef4e",
-      "Hands drawing on architectural plans with a scale ruler",
+      "1664638413509-6aa486866f9a",
+      "Interior architect arranging material samples on a table",
       "4/3",
       1800,
     ),
     detail: unsplash(
-      "1616628188502-413f2fe46e5e",
-      "Hands arranging blank paper cards on a dark table",
+      "1765371513189-44702dcee4be",
+      "Oak cabinetry with lit shelves and decorative objects",
       "3/4",
       1200,
     ),
