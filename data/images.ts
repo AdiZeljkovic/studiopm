@@ -69,16 +69,17 @@ export const images = {
     2800,
   ),
 
+  // TODO: replace with a real photo of the Echandens showroom.
   manifesto: unsplash(
-    "1772442364639-20fe5e5438a1",
-    "Sunlight crossing a dining room with timber shelving and upholstered chairs",
+    "1785873232027-ace4e4d3c9be",
+    "Living space with a timber library wall, dining table and chairs",
     "4/5",
     1600,
   ),
 
   visualBreak: unsplash(
-    "1760072513357-9d450e935a80",
-    "Living room with a floor-to-ceiling library, timber ceiling and lounge seating",
+    "1682418460684-673bb7293f65",
+    "Living room with a sofa, dining table and chairs in a bright apartment",
     "21/9",
     2800,
   ),

@@ -21,7 +21,7 @@ export function HeroImage({ image }: { image: SiteImage }) {
         priority
         fetchPriority="high"
         sizes="100vw"
-        className="object-cover object-[50%_40%]"
+        className="object-cover object-[50%_78%]"
       />
     </motion.div>
   );

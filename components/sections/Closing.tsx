@@ -12,7 +12,11 @@ interface ClosingProps {
 
 /** Contact coordinates. Target of the "Contact" menu item (#contact). */
 export function Closing({ content }: ClosingProps) {
-  const { email, phone, addressLines } = siteConfig.contact;
+  const { email, phone, addressLines, instagram, linkedin } = siteConfig.contact;
+  const socials = [
+    { label: "Instagram", href: instagram },
+    { label: "LinkedIn", href: linkedin },
+  ];
   const placeholder = <span className="text-taupe-light">{content.contact.placeholder}</span>;
 
   return (
@@ -73,6 +77,22 @@ export function Closing({ content }: ClosingProps) {
                       </a>
                     ) : (
                       placeholder
+                    )}
+                  </dd>
+                </div>
+                <div className="grid grid-cols-[6rem_1fr] gap-4 border-b border-line py-4">
+                  <dt className="label-sm pt-1 text-taupe">{content.contact.social}</dt>
+                  <dd className="flex flex-wrap gap-x-5 gap-y-1 text-[0.9375rem]">
+                    {socials.map((s) =>
+                      s.href ? (
+                        <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="link-underline">
+                          {s.label}
+                        </a>
+                      ) : (
+                        <span key={s.label} className="text-taupe-light" title="Link to be added">
+                          {s.label}
+                        </span>
+                      ),
                     )}
                   </dd>
                 </div>

@@ -15,7 +15,11 @@ const linkClass = "link-underline text-[0.875rem] text-ivory/85 transition-color
 /** Compact footer: brand line, navigation and legal links, then a slim bottom bar. */
 export function Footer({ content, locale }: FooterProps) {
   const year = new Date().getFullYear();
-  const instagram = siteConfig.contact.instagram; // TODO: set the real profile URL in lib/site-config.ts
+  // Social profile URLs live in lib/site-config.ts; empty ones render as disabled labels.
+  const social: Record<string, string | null> = {
+    instagram: siteConfig.contact.instagram,
+    linkedin: siteConfig.contact.linkedin,
+  };
 
   return (
     <footer className="bg-ink text-ivory">
@@ -47,9 +51,9 @@ export function Footer({ content, locale }: FooterProps) {
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {content.secondary.map((link) => (
               <li key={link.label}>
-                {link.href === "instagram" ? (
-                  instagram ? (
-                    <a href={instagram} target="_blank" rel="noopener noreferrer" className="link-underline hover:text-ivory">
+                {link.href in social ? (
+                  social[link.href] ? (
+                    <a href={social[link.href]!} target="_blank" rel="noopener noreferrer" className="link-underline hover:text-ivory">
                       {link.label}
                     </a>
                   ) : (

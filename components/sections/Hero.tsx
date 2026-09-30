@@ -11,24 +11,28 @@ interface HeroProps {
 }
 
 /**
- * Editorial hero: the photograph fills the viewport, and an ivory block
- * carrying the headline rises out of its lower-left corner, the way a
- * magazine opener breaks the image edge. No dark overlay is needed.
+ * Editorial hero. The photograph starts under the header and fills exactly
+ * the first screen; the ivory headline panel sits inside that screen at the
+ * bottom-left, so the full sentence is always readable without scrolling.
+ * Intro, facts and actions continue below in the same ivory.
  */
 export function Hero({ content }: HeroProps) {
+  const panelPad = "px-5 sm:px-8 lg:px-12 2xl:px-16";
+  const panelShift = "-ml-5 sm:-ml-8 lg:-ml-12 2xl:-ml-16";
+
   return (
-    <section className="relative bg-ivory">
-      <div className="relative h-[82svh] min-h-[560px] w-full overflow-hidden bg-sand lg:h-[100svh] lg:max-h-[1100px] lg:min-h-[680px]">
+    <section className="relative bg-ivory pt-[72px] lg:pt-24">
+      <div className="relative h-[calc(80svh-72px)] min-h-[480px] w-full overflow-hidden bg-sand lg:h-[calc(100svh-96px)] lg:min-h-[560px] lg:max-h-[980px]">
         <HeroImage image={images.hero} />
 
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/45 via-ink/10 to-transparent"
+          className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/40 via-ink/10 to-transparent"
         />
 
-        <div className="container-site absolute inset-x-0 bottom-0 flex items-end justify-end pb-8 lg:pb-12">
+        <div className="container-site absolute inset-x-0 bottom-0 hidden items-end justify-end pb-8 sm:flex lg:pb-10">
           <Reveal onMount delay={1.4} y={12} className="flex items-end gap-8 text-ivory lg:gap-12">
-            <div className="hidden flex-col items-end gap-4 sm:flex">
+            <div className="hidden flex-col items-end gap-4 md:flex">
               <p className="label flex items-center gap-3">
                 <span className="tabular-nums text-brand">{content.indicator.number}</span>
                 <span aria-hidden="true" className="text-ivory/50">
@@ -36,7 +40,7 @@ export function Hero({ content }: HeroProps) {
                 </span>
                 <span>{content.indicator.label}</span>
               </p>
-              <ul className="label-sm text-right text-ivory/70">
+              <ul className="label-sm text-right text-ivory/75">
                 {content.meta.map((line) => (
                   <li key={line}>{line}</li>
                 ))}
@@ -45,29 +49,33 @@ export function Hero({ content }: HeroProps) {
             <HeroScrollCue label={content.scroll} />
           </Reveal>
         </div>
+
+        {/* Headline panel: always inside the first screen. */}
+        <div className="container-site absolute inset-x-0 bottom-0">
+          <div className={`relative z-10 inline-block max-w-full bg-ivory pt-7 pb-6 sm:pt-9 sm:pb-8 lg:pt-11 lg:pb-9 ${panelShift} ${panelPad} lg:pr-20`}>
+            <Reveal onMount delay={0.5} y={12}>
+              <p className="label flex flex-wrap items-center gap-x-4 gap-y-1 text-taupe">
+                <span className="text-ink normal-case tracking-[0.03em]">{content.eyebrow[0]}</span>
+                <span aria-hidden="true" className="h-px w-8 bg-line-strong" />
+                <span>{content.eyebrow[1]}</span>
+              </p>
+            </Reveal>
+
+            <SplitLines
+              as="h1"
+              lines={content.headline}
+              onMount
+              delay={0.65}
+              className="mt-5 text-[clamp(2.125rem,5.2vw,6rem)] font-light leading-[0.95] tracking-[-0.035em] text-ink sm:mt-7"
+              serifLines={[2]}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Ivory headline block, flush with the left edge, overlapping the image. */}
       <div className="container-site">
-        <div className="relative z-10 -mt-[24vh] -ml-5 max-w-[1180px] bg-ivory pt-8 pr-6 pl-5 sm:-ml-8 sm:pt-10 sm:pr-12 sm:pl-8 lg:-mt-[30vh] lg:-ml-12 lg:pt-14 lg:pr-20 lg:pl-12 2xl:-ml-16 2xl:pl-16">
-          <Reveal onMount delay={0.5} y={12}>
-            <p className="label flex flex-wrap items-center gap-x-4 gap-y-1 text-taupe">
-              <span className="text-ink normal-case tracking-[0.03em]">{content.eyebrow[0]}</span>
-              <span aria-hidden="true" className="h-px w-8 bg-line-strong" />
-              <span>{content.eyebrow[1]}</span>
-            </p>
-          </Reveal>
-
-          <SplitLines
-            as="h1"
-            lines={content.headline}
-            onMount
-            delay={0.65}
-            className="mt-7 text-[clamp(2.75rem,6.3vw,7.5rem)] font-light leading-[0.94] tracking-[-0.035em] text-ink sm:mt-9"
-            serifLines={[2]}
-          />
-
-          <div className="mt-10 grid grid-cols-12 gap-x-6 gap-y-10 lg:mt-14">
+        <div className={`${panelShift} ${panelPad} max-w-[1180px] pt-8 pb-4 lg:pt-12`}>
+          <div className="grid grid-cols-12 gap-x-6 gap-y-10">
             <Reveal onMount delay={1.1} className="col-span-12 lg:col-span-5">
               <p className="text-lede max-w-md text-ink/75">{content.intro}</p>
             </Reveal>

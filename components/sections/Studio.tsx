@@ -7,6 +7,7 @@ import { SplitLines } from "@/components/ui/SplitLines";
 import { ImageReveal } from "@/components/ui/ImageReveal";
 import { Figure } from "@/components/ui/Figure";
 import { ArrowLink } from "@/components/ui/ArrowLink";
+import { Check } from "lucide-react";
 
 interface StudioProps {
   content: Content["studio"];
@@ -25,23 +26,15 @@ export function Studio({ content }: StudioProps) {
           <SectionFolio index={content.index} label={content.label} meta={content.meta} />
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-12 gap-x-6 lg:mt-24">
-          <div className="col-span-12 lg:col-span-11 lg:col-start-2">
-            <SplitLines
-              lines={content.statement}
-              className="text-display-lg lg:text-display-xl"
-              serifLines={[2]}
-            />
-          </div>
-        </div>
-
-        <div className="mt-16 grid grid-cols-12 gap-x-6 gap-y-12 lg:mt-24">
-          <div className="col-span-9 sm:col-span-6 lg:col-span-4">
+        {/* Showroom picture next to the studio text.
+            TODO: replace images.manifesto with a photo of the Echandens showroom. */}
+        <div className="mt-14 grid grid-cols-12 gap-x-6 gap-y-12 lg:mt-20">
+          <div className="col-span-12 sm:col-span-8 lg:col-span-5">
             <ImageReveal>
-              <Figure image={images.manifesto} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 75vw" />
+              <Figure image={images.manifesto} sizes="(min-width: 1024px) 38vw, (min-width: 640px) 66vw, 100vw" />
             </ImageReveal>
           </div>
-          <div className="col-span-12 sm:col-span-10 lg:col-span-5 lg:col-start-6 lg:self-center">
+          <div className="col-span-12 lg:col-span-6 lg:col-start-7 lg:self-center">
             <Reveal>
               <p className="text-lede max-w-xl text-ink">{content.body}</p>
             </Reveal>
@@ -53,6 +46,16 @@ export function Studio({ content }: StudioProps) {
             <SplitLines lines={team.title} className="text-display-md" serifLines={[1]} />
             <Reveal delay={0.15}>
               <p className="mt-8 max-w-md text-body text-ink/80">{team.text}</p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <ul className="mt-6 space-y-2">
+                {team.services.map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-[0.9375rem] text-ink">
+                    <Check aria-hidden="true" strokeWidth={1.5} className="size-4 shrink-0 text-brand" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </Reveal>
 
             <Reveal delay={0.25}>

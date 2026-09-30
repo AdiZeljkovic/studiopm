@@ -10,6 +10,7 @@ export const siteConfig = {
   name: "Studio PortMix",
   legalName: "Studio PortMix",
   parentBrand: "PortMix",
+  parentUrl: "https://www.portmix.ch",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   portmixSince: 2017,
   showroom: {
@@ -23,7 +24,9 @@ export const siteConfig = {
     phone: null as string | null,
     /** Street address lines; the locality (Echandens) is shown regardless. */
     addressLines: null as string[] | null,
+    // TODO: set the real profile URLs; links stay hidden until filled in.
     instagram: null as string | null,
+    linkedin: null as string | null,
   },
 } as const;
 

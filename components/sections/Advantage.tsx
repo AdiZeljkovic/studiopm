@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import type { Content } from "@/lib/i18n";
 import { images } from "@/data/images";
 import { Container } from "@/components/ui/Container";
@@ -7,6 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SplitLines } from "@/components/ui/SplitLines";
 import { ImageReveal } from "@/components/ui/ImageReveal";
 import { Figure } from "@/components/ui/Figure";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 
 interface AdvantageProps {
   content: Content["advantage"];
@@ -44,19 +44,14 @@ export function Advantage({ content }: AdvantageProps) {
             <Reveal delay={0.3}>
               <p className="mt-6 max-w-md text-body text-ivory/65">{content.body}</p>
             </Reveal>
+            <Reveal delay={0.4}>
+              <ArrowLink href={content.cta.href} variant="outline" tone="light" external className="mt-10">
+                {content.cta.label}
+              </ArrowLink>
+            </Reveal>
           </div>
         </div>
 
-        <Reveal delay={0.1}>
-          <p className="mt-20 flex flex-wrap items-baseline gap-x-5 gap-y-3 border-t border-line-dark pt-10 text-display-sm font-light text-ivory lg:mt-28 lg:gap-x-8">
-            {content.keywords.map((word, i) => (
-              <Fragment key={word}>
-                {i > 0 ? <span aria-hidden="true" className="size-1.5 translate-y-[-0.3em] bg-brand" /> : null}
-                <span className={i % 2 === 1 ? "display-serif" : undefined}>{word}</span>
-              </Fragment>
-            ))}
-          </p>
-        </Reveal>
       </Container>
     </section>
   );

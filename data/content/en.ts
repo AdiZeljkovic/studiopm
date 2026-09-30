@@ -55,22 +55,22 @@ export const en = {
     index: "01",
     label: "The studio",
     meta: "Echandens, Switzerland",
-    statement: ["Beautiful interiors begin", "with understanding", "how you live."],
     body:
-      "Studio PortMix brings together interior architecture, bespoke design and real-world construction expertise to create spaces that are coherent, functional and deeply personal.",
+      "At Studio PortMix, we do not design spaces from ready-made templates. We imagine them around the way you live, work, entertain and share. Each project becomes a meeting between a place, its uses and a personality. Our showroom extends this vision, giving you a space to discover, choose and build with us the right answers for your project. Because a successful space is, above all, a space that reflects who you are.",
     team: {
       title: ["Our interior architects", "by your side."],
       text:
         "From the first conversation to the last detail, you work directly with the interior architects who design your project. We take the time to listen, to understand how you live and how the space works, and we stay with you through every decision.",
+      services: ["Specification", "Procurement", "Installation"],
     },
     audience: {
-      label: "For whom",
+      label: "Who is the studio for?",
       text:
         "We work with private clients as well as establishments and investors who want to create or transform a space: houses, apartments, second homes, restaurants, hotels, holiday rentals, guesthouses, Airbnb, chalets and professional spaces. We adapt our support to every project.",
     },
     showroom: {
       label: "Showroom, Echandens",
-      title: "Visits by appointment only.",
+      title: "Visits by appointment.",
       text:
         "Our showroom is a place to take time: to talk through your project, see and touch materials, and make decisions calmly. Because we receive you by appointment, we are entirely available to you throughout your visit.",
       cta: { label: "Book a visit", href: "#contact" },
@@ -149,7 +149,7 @@ export const en = {
     lede: "We don't only design interiors. We know how every element is made.",
     body:
       "Since 2017, PortMix has worked in interior joinery across French-speaking Switzerland: interior doors, wardrobes, bespoke furniture and demanding fit-outs alongside construction and real-estate professionals. That hands-on knowledge of materials, details and execution shapes every Studio PortMix design from the first sketch, and lets us coordinate craftsmen and specialists with clarity through to completion.",
-    keywords: ["Design", "Material", "Craft", "Execution"],
+    cta: { label: "Visit PortMix", href: "https://www.portmix.ch" },
   },
 
   process: {
@@ -164,15 +164,15 @@ export const en = {
         number: "01",
         title: "Discover",
         description:
-          "We begin by understanding your space, lifestyle, needs and ambitions. A first conversation and a visit on site tell us more than any written brief.",
-        involves: "First conversation, site visit, initial brief",
+          "We begin by understanding your space, lifestyle, needs and ambitions. We come to see the site; depending on the project, especially if it is still under construction, the first meeting can also take place at our showroom or by video call.",
+        involves: "First meeting on site, at the showroom or by video call",
       },
       {
         number: "02",
         title: "Define",
         description:
           "We establish priorities, scope, spatial direction and project requirements, so that every later decision has a clear frame to sit within.",
-        involves: "Scope, priorities and requirements",
+        involves: "Project brief drawn up before the design study",
       },
       {
         number: "03",
@@ -420,7 +420,8 @@ export const en = {
       phone: "Phone",
       showroom: "Showroom",
       showroomValue: "Echandens, Switzerland",
-      appointment: "Visits by appointment only",
+      appointment: "Visits by appointment",
+      social: "Social",
       placeholder: "To be confirmed",
     },
     cta: { label: "Start a project", href: "#project-inquiry" },
@@ -437,6 +438,7 @@ export const en = {
     ] satisfies NavLink[],
     secondary: [
       { label: "Instagram", href: "instagram" },
+      { label: "LinkedIn", href: "linkedin" },
       { label: "Privacy", href: "/privacy" },
       { label: "Legal notice", href: "/legal" },
     ] satisfies NavLink[],

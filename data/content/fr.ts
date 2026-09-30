@@ -24,7 +24,7 @@ export const fr: Content = {
   navigation: {
     primary: [
       { label: "Le Studio", href: "#studio" },
-      { label: "Compétences", href: "#expertise" },
+      { label: "Savoir-faire", href: "#expertise" },
       { label: "Approche", href: "#approach" },
       { label: "Contact", href: "#contact" },
     ],
@@ -53,22 +53,22 @@ export const fr: Content = {
     index: "01",
     label: "Le Studio",
     meta: "Echandens, Suisse",
-    statement: ["Un bel intérieur commence", "par comprendre", "votre façon de vivre."],
     body:
-      "Studio PortMix réunit architecture d’intérieur, design sur mesure et véritable expertise de la construction pour créer des espaces cohérents, fonctionnels et profondément personnels.",
+      "Chez Studio PortMix, nous ne pensons pas les espaces selon des modèles préétablis. Nous les imaginons autour de votre façon de vivre, de travailler, de recevoir et de partager. Chaque projet devient ainsi une rencontre entre un lieu, des usages et une personnalité. Notre showroom nous permet de prolonger cette vision, en vous offrant un espace pour découvrir, choisir et construire avec nous les bonnes réponses à votre projet. Parce qu’un espace réussi est avant tout un espace qui vous ressemble.",
     team: {
       title: ["Nos architectes d’intérieur", "à vos côtés."],
       text:
         "De la première rencontre au dernier détail, vous échangez directement avec les architectes d’intérieur qui conçoivent votre projet. Nous prenons le temps de vous écouter, de comprendre votre façon de vivre et le fonctionnement de l’espace, et nous vous accompagnons à chaque décision.",
+      services: ["Prescription", "Approvisionnement", "Installation"],
     },
     audience: {
-      label: "Pour qui",
+      label: "À qui s’adresse le studio ?",
       text:
         "Nous nous adressons aussi bien aux particuliers qu’aux établissements et investisseurs souhaitant créer ou transformer un espace : maisons, appartements, résidences secondaires, restaurants, hôtels, locations saisonnières, gîtes, Airbnb, chalets ou espaces professionnels. Nous adaptons notre accompagnement à chaque projet.",
     },
     showroom: {
       label: "Showroom, Echandens",
-      title: "Visite uniquement sur rendez-vous.",
+      title: "Visite sur rendez-vous.",
       text:
         "Notre showroom est un lieu où l’on prend le temps : échanger autour de votre projet, voir et toucher les matériaux, décider sereinement. En vous recevant sur rendez-vous, nous sommes entièrement disponibles pour vous pendant toute votre visite.",
       cta: { label: "Prendre rendez-vous", href: "#contact" },
@@ -81,7 +81,7 @@ export const fr: Content = {
 
   expertise: {
     index: "02",
-    label: "Compétences",
+    label: "Savoir-faire",
     meta: "De l’idée à la réalisation",
     title: ["De la première esquisse", "au dernier détail."],
     intro:
@@ -147,7 +147,7 @@ export const fr: Content = {
     lede: "Nous ne faisons pas uniquement du design. Nous savons comment chaque élément est conçu et réalisé.",
     body:
       "Depuis 2017, PortMix est active dans la menuiserie intérieure en Suisse romande : portes intérieures, armoires, mobilier sur mesure et aménagements exigeants, aux côtés des professionnels de la construction et de l’immobilier. Cette connaissance concrète des matériaux, des détails et de l’exécution nourrit chaque projet de Studio PortMix dès la première esquisse, et nous permet de coordonner artisans et spécialistes avec clarté jusqu’à la réalisation.",
-    keywords: ["Design", "Matière", "Savoir-faire", "Exécution"],
+    cta: { label: "Découvrir PortMix", href: "https://www.portmix.ch" },
   },
 
   process: {
@@ -162,15 +162,15 @@ export const fr: Content = {
         number: "01",
         title: "Découvrir",
         description:
-          "Nous commençons par comprendre votre espace, votre mode de vie, vos besoins et vos envies. Une première rencontre et une visite sur place en disent plus que n’importe quel cahier des charges.",
-        involves: "Premier échange, visite sur place, brief initial",
+          "Nous commençons par comprendre votre espace, votre mode de vie, vos besoins et vos envies. Nous nous déplaçons sur place ; selon le projet, notamment s’il est encore en construction, le premier rendez-vous peut aussi avoir lieu dans notre showroom ou en visio.",
+        involves: "Premier rendez-vous sur place, au showroom ou en visio",
       },
       {
         number: "02",
         title: "Définir",
         description:
           "Nous fixons les priorités, le périmètre, l’orientation spatiale et les exigences du projet, pour que chaque décision s’inscrive dans un cadre clair.",
-        involves: "Périmètre, priorités et exigences",
+        involves: "Création du cahier des charges avant étude du projet",
       },
       {
         number: "03",
@@ -419,7 +419,8 @@ export const fr: Content = {
       phone: "Téléphone",
       showroom: "Showroom",
       showroomValue: "Echandens, Suisse",
-      appointment: "Visites uniquement sur rendez-vous",
+      appointment: "Visites sur rendez-vous",
+      social: "Réseaux",
       placeholder: "À confirmer",
     },
     cta: { label: "Démarrer un projet", href: "#project-inquiry" },
@@ -429,13 +430,14 @@ export const fr: Content = {
     wordmark: ["Studio", "PortMix"],
     navigation: [
       { label: "Le Studio", href: "#studio" },
-      { label: "Compétences", href: "#expertise" },
+      { label: "Savoir-faire", href: "#expertise" },
       { label: "Approche", href: "#approach" },
       { label: "Contact", href: "#contact" },
       { label: "Démarrer un projet", href: "#project-inquiry" },
     ],
     secondary: [
       { label: "Instagram", href: "instagram" },
+      { label: "LinkedIn", href: "linkedin" },
       { label: "Confidentialité", href: "/privacy" },
       { label: "Mentions légales", href: "/legal" },
     ],
