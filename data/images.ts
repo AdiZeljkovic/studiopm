@@ -80,7 +80,7 @@ export const images = {
   visualBreak: unsplash(
     "1682418460684-673bb7293f65",
     "Living room with a sofa, dining table and chairs in a bright apartment",
-    "21/9",
+    "3/2",
     2800,
   ),
 

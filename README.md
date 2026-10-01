@@ -105,7 +105,7 @@ A private editor for the studio's newsletters lives at **`/newsletter`**. It off
 
 **Before the first real send:**
 - Set `NEXT_PUBLIC_NEWSLETTER_ASSET_BASE` to the live site address (e.g. `https://www.studio-portmix.ch`). Emails load the logo, icons and PortMix photos from there. The editor shows a warning while it still points to localhost.
-- Confirm the footer contact lines. `info@studio-portmix.ch` and `www.studio-portmix.ch` come from the mockups and are editable per newsletter.
+- Confirm the footer contact lines. The email is `info@portmix.ch`; `www.studio-portmix.ch` comes from the mockups. Both are editable per newsletter.
 - Optional: set `RESEND_API_KEY` and `NEWSLETTER_FROM` to enable **Envoyer un test**, which sends one test email (`app/api/newsletter/send/route.ts`).
 
 **Code:** `lib/newsletter/` holds the data model, default copy, templates, the email HTML renderer (600px tables, inline styles, Outlook fallbacks) and draft storage. `components/newsletter/` holds the editor UI. Email logos and icons are PNGs in `public/email-assets/`, since many email clients do not display SVG.

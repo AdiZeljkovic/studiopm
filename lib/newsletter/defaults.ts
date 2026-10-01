@@ -157,7 +157,7 @@ export function createNewsletter(template: TemplateId, locale: NewsletterLocale)
     },
     footer: {
       location: fr ? "Showroom à Echandens, Suisse" : "Showroom in Echandens, Switzerland",
-      email: "info@studio-portmix.ch",
+      email: "info@portmix.ch",
       website: "www.studio-portmix.ch",
       websiteUrl: SITE,
       unsubscribeLabel: fr ? "Se désinscrire" : "Unsubscribe",

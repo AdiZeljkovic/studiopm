@@ -19,14 +19,13 @@ export const siteConfig = {
     size: "600 m²",
   },
   contact: {
-    // TODO: replace with the real studio contact details.
-    email: null as string | null,
-    phone: null as string | null,
+    // Same phone and email as PortMix (confirmed by the client, 1 Oct 2026).
+    email: "info@portmix.ch" as string | null,
+    phone: "+41 21 611 12 14" as string | null,
     /** Street address lines; the locality (Echandens) is shown regardless. */
     addressLines: null as string[] | null,
-    // TODO: set the real profile URLs; links stay hidden until filled in.
-    instagram: null as string | null,
-    linkedin: null as string | null,
+    instagram: "https://www.instagram.com/studioportmix/" as string | null,
+    linkedin: "https://www.linkedin.com/showcase/studio-portmix/about/" as string | null,
   },
 } as const;
 

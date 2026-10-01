@@ -17,7 +17,7 @@ export function VisualBreak({ content }: VisualBreakProps) {
             alt={images.visualBreak.alt}
             fill
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[45%_22%]"
           />
         </div>
       </ImageReveal>
