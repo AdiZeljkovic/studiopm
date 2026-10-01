@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
 
@@ -59,7 +59,7 @@ export function Progress({ eyebrow, step, names, onJump, navLabel }: ProgressPro
         </nav>
       </div>
       <div className="relative h-px w-full bg-line" aria-hidden="true">
-        <motion.div
+        <m.div
           className="absolute left-0 top-0 h-px bg-brand"
           initial={false}
           animate={{ width: `${((step + 1) / total) * 100}%` }}

@@ -9,9 +9,9 @@ import type { ChoiceOption, NavLink, ProcessStep, ServiceItem } from "@/data/con
  */
 export const en = {
   meta: {
-    title: "Studio PortMix | Interior Architecture & Design",
+    title: "Studio PortMix | Interior Architecture & Bespoke Joinery",
     description:
-      "Studio PortMix designs and realises bespoke interiors, from concept to completion, combining interior architecture, custom joinery and practical project expertise. Showroom in Echandens, Switzerland.",
+      "Interior architecture, design and bespoke joinery, from first idea to completion. Homes, apartments, hotels and restaurants. Showroom in Echandens, Vaud.",
   },
 
   common: {

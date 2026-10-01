@@ -14,7 +14,7 @@
   --color-ink-soft: #22201e;
   --color-ink-muted: #3a3733;
   --color-taupe: #746c62;
-  --color-taupe-light: #a1988c;
+  --color-taupe-light: #918779; /* 3.2:1 on ivory, AA for large text */
   --color-line: #d9d2c7;
   --color-line-strong: #bcb3a6;
   --color-line-dark: #35322e;
@@ -203,5 +203,25 @@
 @media (prefers-reduced-motion: reduce) {
   .link-underline::after {
     transition: none;
+  }
+}
+
+/* Hero photograph: slow settle, CSS only so it never waits for hydration. */
+@keyframes hero-settle {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero-settle {
+  animation: hero-settle 2.4s var(--ease-out-expo) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-settle {
+    animation: none;
   }
 }

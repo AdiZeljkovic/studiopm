@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { EASE_OUT } from "@/lib/motion";
 import type { Content } from "@/lib/i18n";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -11,7 +11,7 @@ interface SuccessStateProps {
 
 export function SuccessState({ content }: SuccessStateProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.9, ease: EASE_OUT }}
@@ -29,6 +29,6 @@ export function SuccessState({ content }: SuccessStateProps) {
           {content.cta}
         </ArrowLink>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

@@ -110,6 +110,15 @@ A private editor for the studio's newsletters lives at **`/newsletter`**. It off
 
 **Code:** `lib/newsletter/` holds the data model, default copy, templates, the email HTML renderer (600px tables, inline styles, Outlook fallbacks) and draft storage. `components/newsletter/` holds the editor UI. Email logos and icons are PNGs in `public/email-assets/`, since many email clients do not display SVG.
 
+## 8. SEO and performance
+
+- **Metadata** per language: title, description, canonical, `hreflang` (en, fr, x-default → fr), Open Graph and Twitter cards. Copy lives in `meta` in `data/content/*.ts`.
+- **Share image:** `public/og/studio-portmix.jpg` (1200×630, logo + hero photo), configured in `lib/site-config.ts`.
+- **Structured data** (JSON-LD in `app/[locale]/layout.tsx`): ProfessionalService with address, phone, email, services, Instagram/LinkedIn/PortMix links, plus WebSite.
+- **Sitemap** lists only indexable pages; bump `CONTENT_UPDATED` in `app/sitemap.ts` after meaningful content changes. **Robots** keeps `/api/` and `/newsletter` out of search.
+- **Performance:** animations load through `LazyMotion` (lightweight `m` components); the hero image animates with CSS only; the questionnaire script loads when the visitor approaches it (`LazyInquiryForm.tsx`). Lighthouse on the local production build: mobile 92 / 100 / 100 / 100, desktop 100 in all four categories.
+- **After launch:** add the site to Google Search Console and submit `https://studio.portmix.ch/sitemap.xml`; a Google Business Profile for the Echandens showroom helps local search.
+
 ## Project structure
 
 ```

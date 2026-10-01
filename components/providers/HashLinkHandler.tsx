@@ -34,7 +34,17 @@ export function HashLinkHandler() {
       requestAnimationFrame(() =>
         requestAnimationFrame(() => {
           if (id === "top") window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-          else target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+          else {
+            target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+            // Content loaded on the way (e.g. the questionnaire) can move the
+            // target; settle on it once more after the smooth scroll.
+            window.setTimeout(() => {
+              const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+              if (Math.abs(target.getBoundingClientRect().top - offset) > 24) {
+                target.scrollIntoView({ behavior: "auto", block: "start" });
+              }
+            }, 1100);
+          }
           window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}#${id}`);
         }),
       );

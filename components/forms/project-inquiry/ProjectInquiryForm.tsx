@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
 import { FormProvider, useForm, useFormContext, type FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
@@ -210,7 +210,7 @@ export function ProjectInquiryForm({ content, locale, privacyHref }: ProjectInqu
 
           <div className="mt-12 lg:mt-20">
             <AnimatePresence mode="wait" initial={false}>
-              <motion.div
+              <m.div
                 key={step}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -307,7 +307,7 @@ export function ProjectInquiryForm({ content, locale, privacyHref }: ProjectInqu
                     <ConsentField label={s.finish.consent.label} linkLabel={s.finish.consent.privacyLink} href={privacyHref} />
                   </StepShell>
                 ) : null}
-              </motion.div>
+              </m.div>
             </AnimatePresence>
           </div>
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
@@ -156,7 +156,7 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
 
       <AnimatePresence>
         {open ? (
-          <motion.div
+          <m.div
             id="mobile-navigation"
             key="mobile-nav"
             initial={{ opacity: 0 }}
@@ -169,7 +169,7 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
               <nav aria-label="Mobile" className="flex-1">
                 <ul className="flex flex-col border-t border-line">
                   {links.map((link, i) => (
-                    <motion.li
+                    <m.li
                       key={link.href}
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -186,13 +186,13 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
                         <span className="text-display-sm">{link.label}</span>
                         <span className="label-sm tabular-nums text-taupe">0{i + 1}</span>
                       </Link>
-                    </motion.li>
+                    </m.li>
                   ))}
                 </ul>
                 <LanguageSwitch locale={locale} label={labels.language} className="mt-8" onNavigate={close} />
               </nav>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
@@ -212,9 +212,9 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
                     <li key={m}>{m}</li>
                   ))}
                 </ul>
-              </motion.div>
+              </m.div>
             </div>
-          </motion.div>
+          </m.div>
         ) : null}
       </AnimatePresence>
     </header>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
@@ -70,7 +70,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
                       <span
                         className={cn(
                           "text-display-sm transition-colors duration-500",
-                          isActive ? "text-ink" : "text-ink/55 group-hover:text-ink",
+                          isActive ? "text-ink" : "text-ink/70 group-hover:text-ink",
                         )}
                       >
                         {service.title}
@@ -87,7 +87,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
 
                     <AnimatePresence initial={false}>
                       {isActive ? (
-                        <motion.div
+                        <m.div
                           id={panelId}
                           key="panel"
                           initial={{ height: 0, opacity: 0 }}
@@ -109,7 +109,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
                               </div>
                             </div>
                           </div>
-                        </motion.div>
+                        </m.div>
                       ) : null}
                     </AnimatePresence>
                   </li>
@@ -140,7 +140,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
                   className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/40 to-transparent"
                 />
                 <AnimatePresence mode="popLayout" initial={false}>
-                  <motion.span
+                  <m.span
                     key={current.number}
                     aria-hidden="true"
                     initial={{ opacity: 0, y: 16 }}
@@ -150,7 +150,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
                     className="figure-serif pointer-events-none absolute bottom-5 left-6 text-[7rem] text-ivory"
                   >
                     {current.number}
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
               </div>
             </div>

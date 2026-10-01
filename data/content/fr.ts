@@ -7,9 +7,9 @@ import type { Content } from "@/lib/i18n";
  */
 export const fr: Content = {
   meta: {
-    title: "Studio PortMix | Architecture d’intérieur & design",
+    title: "Studio PortMix | Architecture d’intérieur & menuiserie sur mesure",
     description:
-      "Studio PortMix conçoit et réalise des intérieurs sur mesure, de l’idée à la réalisation, en alliant architecture d’intérieur, menuiserie sur mesure et expertise de chantier. Showroom à Echandens, Suisse.",
+      "Architecture d’intérieur, design et menuiserie sur mesure, de l’idée à la réalisation. Maisons, appartements, hôtels et restaurants. Showroom à Echandens (VD).",
   },
 
   common: {

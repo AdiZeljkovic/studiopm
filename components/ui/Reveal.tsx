@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { m, type HTMLMotionProps } from "framer-motion";
 import type { ReactNode } from "react";
 import { DURATION, EASE_OUT, VIEWPORT } from "@/lib/motion";
 
@@ -23,7 +23,7 @@ export function Reveal({
   ...rest
 }: RevealProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y }}
       {...(onMount
         ? { animate: { opacity: 1, y: 0 } }
@@ -32,6 +32,6 @@ export function Reveal({
       {...rest}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

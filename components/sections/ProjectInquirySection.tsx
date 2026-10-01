@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionFolio } from "@/components/ui/SectionFolio";
 import { SplitLines } from "@/components/ui/SplitLines";
-import { ProjectInquiryForm } from "@/components/forms/project-inquiry/ProjectInquiryForm";
+import { LazyInquiryForm } from "@/components/forms/project-inquiry/LazyInquiryForm";
 
 interface ProjectInquirySectionProps {
   intro: Content["projectCta"];
@@ -35,7 +35,7 @@ export function ProjectInquirySection({ intro, content, locale }: ProjectInquiry
         </div>
 
         <div className="mt-16 lg:mt-24">
-          <ProjectInquiryForm content={content} locale={locale} privacyHref={`/${locale}/privacy`} />
+          <LazyInquiryForm content={content} locale={locale} privacyHref={`/${locale}/privacy`} />
         </div>
       </Container>
     </section>

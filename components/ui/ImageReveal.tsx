@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { DURATION, EASE_OUT, VIEWPORT } from "@/lib/motion";
@@ -24,7 +24,7 @@ export function ImageReveal({
   const hidden = direction === "up" ? "inset(100% 0 0 0)" : "inset(0 100% 0 0)";
   const visible = "inset(0 0 0 0)";
   return (
-    <motion.div
+    <m.div
       className={cn("relative overflow-hidden", className)}
       initial={{ clipPath: hidden }}
       {...(onMount
@@ -32,7 +32,7 @@ export function ImageReveal({
         : { whileInView: { clipPath: visible }, viewport: VIEWPORT })}
       transition={{ duration: DURATION.image, delay, ease: EASE_OUT }}
     >
-      <motion.div
+      <m.div
         className="h-full w-full"
         initial={{ scale: 1.08 }}
         {...(onMount
@@ -41,7 +41,7 @@ export function ImageReveal({
         transition={{ duration: DURATION.image + 0.4, delay, ease: EASE_OUT }}
       >
         {children}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }

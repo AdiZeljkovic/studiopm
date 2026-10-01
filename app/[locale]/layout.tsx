@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import { Geist, Instrument_Serif } from "next/font/google";
 import "../globals.css";
 import { siteConfig } from "@/lib/site-config";
-import { getContent, hasLocale, localeLabels, locales } from "@/lib/i18n";
-import { images } from "@/data/images";
+import { defaultLocale, getContent, hasLocale, localeLabels, locales } from "@/lib/i18n";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { HashLinkHandler } from "@/components/providers/HashLinkHandler";
 import { Header } from "@/components/layout/Header";
@@ -33,14 +32,19 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
   const t = getContent(locale);
+  const share = siteConfig.shareImage;
   return {
     metadataBase: new URL(siteConfig.url),
     title: { default: t.meta.title, template: `%s | ${siteConfig.name}` },
     description: t.meta.description,
     applicationName: siteConfig.name,
+    authors: [{ name: siteConfig.name, url: siteConfig.url }],
+    creator: siteConfig.name,
+    publisher: siteConfig.parentBrand,
+    formatDetection: { telephone: false, address: false, email: false },
     alternates: {
       canonical: `/${locale}`,
-      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+      languages: { ...Object.fromEntries(locales.map((l) => [l, `/${l}`])), "x-default": `/${defaultLocale}` },
     },
     openGraph: {
       type: "website",
@@ -50,19 +54,18 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
       siteName: siteConfig.name,
       title: t.meta.title,
       description: t.meta.description,
-      // TODO: replace with a dedicated 1200×630 Open Graph image once real photography exists.
-      images: [{ url: images.hero.src, width: 1600, height: 900, alt: images.hero.alt }],
+      images: [{ url: share.path, width: share.width, height: share.height, alt: siteConfig.name, type: "image/jpeg" }],
     },
     twitter: {
       card: "summary_large_image",
       title: t.meta.title,
       description: t.meta.description,
-      images: [images.hero.src],
+      images: [share.path],
     },
     robots: {
       index: true,
       follow: true,
-      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+      googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
     },
   };
 }
@@ -78,21 +81,46 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!hasLocale(locale)) notFound();
   const t = getContent(locale);
 
-  const organizationJsonLd = {
+  const { contact, showroom } = siteConfig;
+  const sameAs = [contact.instagram, contact.linkedin, siteConfig.parentUrl].filter(Boolean);
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: siteConfig.name,
-    description: t.meta.description,
-    url: `${siteConfig.url}/${locale}`,
-    areaServed: "CH",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: siteConfig.showroom.locality,
-      addressCountry: siteConfig.showroom.country,
-    },
-    parentOrganization: { "@type": "Organization", name: siteConfig.parentBrand },
-    ...(siteConfig.contact.email ? { email: siteConfig.contact.email } : {}),
-    ...(siteConfig.contact.phone ? { telephone: siteConfig.contact.phone } : {}),
+    "@graph": [
+      {
+        "@type": ["ProfessionalService", "HomeAndConstructionBusiness"],
+        "@id": `${siteConfig.url}/#studio`,
+        name: siteConfig.name,
+        description: t.meta.description,
+        url: `${siteConfig.url}/${locale}`,
+        logo: `${siteConfig.url}${siteConfig.logoPath}`,
+        image: `${siteConfig.url}${siteConfig.shareImage.path}`,
+        ...(contact.email ? { email: contact.email } : {}),
+        ...(contact.phone ? { telephone: contact.phone } : {}),
+        address: {
+          "@type": "PostalAddress",
+          ...(contact.addressLines?.length ? { streetAddress: contact.addressLines.join(", ") } : {}),
+          postalCode: showroom.postalCode,
+          addressLocality: showroom.locality,
+          addressRegion: showroom.region,
+          addressCountry: showroom.country,
+        },
+        areaServed: [
+          { "@type": "AdministrativeArea", name: locale === "fr" ? "Suisse romande" : "French-speaking Switzerland" },
+          { "@type": "Country", name: "CH" },
+        ],
+        knowsAbout: t.expertise.services.map((s) => s.title),
+        sameAs,
+        parentOrganization: { "@type": "Organization", name: siteConfig.parentBrand, url: siteConfig.parentUrl },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteConfig.url}/#website`,
+        url: siteConfig.url,
+        name: siteConfig.name,
+        inLanguage: locales,
+        publisher: { "@id": `${siteConfig.url}/#studio` },
+      },
+    ],
   };
 
   return (
@@ -121,7 +149,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         </MotionProvider>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </body>
     </html>

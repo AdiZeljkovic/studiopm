@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { DURATION, EASE_OUT, VIEWPORT } from "@/lib/motion";
 
@@ -19,10 +19,10 @@ interface SplitLinesProps {
 }
 
 const motionTags = {
-  h1: motion.h1,
-  h2: motion.h2,
-  h3: motion.h3,
-  p: motion.p,
+  h1: m.h1,
+  h2: m.h2,
+  h3: m.h3,
+  p: m.p,
 } as const;
 
 /**
@@ -52,7 +52,7 @@ export function SplitLines({
     >
       {lines.map((line, i) => (
         <span key={i} className="-mb-[0.1em] block overflow-hidden pb-[0.1em]">
-          <motion.span
+          <m.span
             className={cn(
               "block will-change-transform",
               serifLines.includes(i) && "display-serif",
@@ -68,7 +68,7 @@ export function SplitLines({
             }}
           >
             {line}
-          </motion.span>
+          </m.span>
         </span>
       ))}
     </MotionTag>

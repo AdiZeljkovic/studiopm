@@ -21,7 +21,7 @@ export function StepShell({ index, title, intro, aside, headingRef, children }: 
     <div className="grid grid-cols-12 gap-x-6 gap-y-10">
       <div className="col-span-12 lg:col-span-4">
         <div className="lg:sticky lg:top-28">
-          <p aria-hidden="true" className="figure-serif text-[4.5rem] leading-none text-line-strong lg:text-[6rem]">
+          <p aria-hidden="true" className="figure-serif text-[4.5rem] leading-none text-taupe-light lg:text-[6rem]">
             {pad(index + 1)}
           </p>
           <h2 ref={headingRef} tabIndex={-1} className="mt-4 text-display-md uppercase tracking-[-0.01em] focus:outline-none">
