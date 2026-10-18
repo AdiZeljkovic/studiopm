@@ -46,7 +46,14 @@ export function Footer({ content, locale }: FooterProps) {
         </div>
 
         <div className="mt-10 flex flex-col gap-4 border-t border-line-dark pt-6 text-[0.75rem] text-ivory/50 sm:flex-row sm:items-center sm:justify-between">
-          <p className="tracking-[0.02em]">{format(content.copyright, { year })}</p>
+          <p className="tracking-[0.02em]">
+            {format(content.copyright, { year })}
+            <span aria-hidden="true" className="mx-2 text-ivory/25">·</span>
+            Website by{" "}
+            <a href="https://luminor.solutions" target="_blank" rel="nofollow noopener" className="link-underline hover:text-ivory">
+              Luminor.Solutions
+            </a>
+          </p>
 
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {content.secondary.map((link) => (
