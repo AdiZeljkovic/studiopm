@@ -26,6 +26,9 @@ export type Kontakt = { -readonly [K in keyof typeof siteConfig.contact]: (typeo
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = Record<string, any>;
 
+/** Polja koja Payload dodaje svakom redu/globalu — nisu tekst sajta. */
+const SISTEMSKI = new Set(["id", "createdAt", "updatedAt", "globalType", "blockType", "blockName"]);
+
 /** Generičko spajanje: vrijednost iz CMS-a preko vrijednosti iz koda, istim oblikom. */
 function prekrij<T>(z: T, v: unknown): T {
   if (typeof z === "string") return (typeof v === "string" && v.trim() ? v : z) as T;
@@ -42,8 +45,12 @@ function prekrij<T>(z: T, v: unknown): T {
     const izvor = (v && typeof v === "object" ? v : {}) as J;
     const out: J = {};
     for (const [k, zv] of Object.entries(z as J)) out[k] = prekrij(zv, izvor[k]);
+    // tekst kojeg u kodu nema (npr. pomoć ispod ponuđenog odgovora u upitniku) — iz CMS-a
+    for (const [k, cv] of Object.entries(izvor))
+      if (!(k in out) && !SISTEMSKI.has(k) && typeof cv === "string" && cv.trim()) out[k] = cv;
     return out as T;
   }
+  if (z === undefined && typeof v === "string" && v.trim()) return v as T;
   return z;
 }
 
@@ -86,17 +93,35 @@ function kontakt(v: unknown): Kontakt {
   };
 }
 
+/**
+ * Zadnji uspješan odgovor CMS-a (u memoriji procesa). Ako CMS nakratko ne odgovara
+ * (restart, deploy), stranica se pravi od njega — a ne od starog teksta iz koda,
+ * koji bi se onda keširao do sat vremena. Pri buildu jedan pokušaj (bez čekanja).
+ */
+const zadnjiDobar = new Map<string, J>();
+const pokusaja = () => (process.env.NEXT_PHASE === "phase-production-build" ? 1 : 3);
+const pauza = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 async function povuci(locale: Locale): Promise<J | null> {
   if (!CMS_URL) return null;
-  try {
-    const res = await fetch(`${CMS_URL}/api/sadrzaj/studio?locale=${locale}`, {
-      next: { tags: [CMS_OZNAKA], revalidate: 3600 },
-      signal: AbortSignal.timeout(8000),
-    });
-    return res.ok ? ((await res.json()) as J) : null;
-  } catch {
-    return null;
+  for (let i = 0; i < pokusaja(); i++) {
+    if (i) await pauza(1000 * i);
+    try {
+      const res = await fetch(`${CMS_URL}/api/sadrzaj/studio?locale=${locale}`, {
+        next: { tags: [CMS_OZNAKA], revalidate: 3600 },
+        signal: AbortSignal.timeout(5000),
+      });
+      if (res.ok) {
+        const d = (await res.json()) as J;
+        zadnjiDobar.set(locale, d);
+        return d;
+      }
+      if (res.status < 500) break;
+    } catch {
+      /* CMS ne odgovara — novi pokušaj */
+    }
   }
+  return zadnjiDobar.get(locale) ?? null;
 }
 
 export type Sadrzaj = { t: Content; images: Slike; contact: Kontakt };

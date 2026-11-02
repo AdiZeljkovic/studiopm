@@ -5,6 +5,26 @@ import { deliverInquiry } from "@/lib/project-inquiry/delivery";
 
 export const runtime = "nodejs";
 
+// Po IP adresi: 5 upita u 10 minuta (u memoriji je dovoljno — jedan kontejner).
+const PROZOR = 10 * 60 * 1000;
+const LIMIT = 5;
+const nedavni = new Map<string, number[]>();
+
+function previse(req: Request) {
+  // Cloudflare → Traefik (kao portmix.ch): posjetilac je u cf-connecting-ip, inače adresa konekcije
+  const ip =
+    req.headers.get("cf-connecting-ip") ||
+    req.headers.get("x-real-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",").pop()?.trim() ||
+    "nepoznata";
+  const sad = Date.now();
+  if (nedavni.size > 2000) for (const [k, l] of nedavni) if (l.every((t) => sad - t >= PROZOR)) nedavni.delete(k);
+  const lista = (nedavni.get(ip) ?? []).filter((t) => sad - t < PROZOR);
+  lista.push(sad);
+  nedavni.set(ip, lista);
+  return lista.length > LIMIT;
+}
+
 /**
  * POST /api/project-inquiry
  *
@@ -24,6 +44,10 @@ export async function POST(request: Request) {
   // humans never fill in. Bots that do are silently accepted and dropped.
   if (typeof body === "object" && body !== null && "website" in body && (body as { website?: string }).website) {
     return NextResponse.json({ ok: true, delivered: false, channel: "none" });
+  }
+
+  if (previse(request)) {
+    return NextResponse.json({ ok: false, error: "Too many requests. Please try again later." }, { status: 429 });
   }
 
   const parsed = projectInquirySchema.safeParse(body);

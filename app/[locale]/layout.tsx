@@ -7,6 +7,7 @@ import { defaultLocale, hasLocale, localeLabels, locales } from "@/lib/i18n";
 import { getSadrzaj } from "@/lib/cms";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { HashLinkHandler } from "@/components/providers/HashLinkHandler";
+import { NotFoundContentProvider } from "@/components/providers/NotFoundContent";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
@@ -147,7 +148,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
             meta={t.hero.meta}
           />
           <main id="main" className="flex-1">
-            {children}
+            <NotFoundContentProvider value={t.notFound}>{children}</NotFoundContentProvider>
           </main>
           <Footer content={t.footer} locale={locale} contact={contact} />
         </MotionProvider>
