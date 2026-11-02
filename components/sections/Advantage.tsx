@@ -1,5 +1,5 @@
 import type { Content } from "@/lib/i18n";
-import { images } from "@/data/images";
+import type { Slike } from "@/lib/cms";
 import { Container } from "@/components/ui/Container";
 import { SectionFolio } from "@/components/ui/SectionFolio";
 import { Reveal } from "@/components/ui/Reveal";
@@ -10,13 +10,14 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 
 interface AdvantageProps {
   content: Content["advantage"];
+  images: Slike;
 }
 
 /**
  * The studio's difference in one chapter: design built on PortMix joinery
  * expertise, knowing how every element is actually made.
  */
-export function Advantage({ content }: AdvantageProps) {
+export function Advantage({ content, images }: AdvantageProps) {
   return (
     <section className="bg-ink text-ivory">
       <Container className="py-20 lg:py-32">

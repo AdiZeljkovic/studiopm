@@ -128,6 +128,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
                     alt={images[service.image].alt}
                     fill
                     sizes="(min-width: 1024px) 40vw, 100vw"
+                    style={{ objectPosition: images[service.image].position }}
                     className={cn(
                       "object-cover transition-opacity duration-700 ease-[var(--ease-out-expo)]",
                       i === active ? "opacity-100" : "opacity-0",

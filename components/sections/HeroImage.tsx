@@ -17,6 +17,7 @@ export function HeroImage({ image }: { image: SiteImage }) {
         fetchPriority="high"
         sizes="100vw"
         quality={70}
+        style={{ objectPosition: image.position }}
         className="object-cover object-[50%_78%]"
       />
     </div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUp } from "lucide-react";
-import { siteConfig } from "@/lib/site-config";
+import type { Kontakt } from "@/lib/cms";
 import { format } from "@/lib/i18n";
 import type { Content, Locale } from "@/lib/i18n";
 import { Container } from "@/components/ui/Container";
@@ -8,17 +8,18 @@ import { Container } from "@/components/ui/Container";
 interface FooterProps {
   content: Content["footer"];
   locale: Locale;
+  contact: Kontakt;
 }
 
 const linkClass = "link-underline text-[0.875rem] text-ivory/85 transition-colors hover:text-ivory";
 
 /** Compact footer: brand line, navigation and legal links, then a slim bottom bar. */
-export function Footer({ content, locale }: FooterProps) {
+export function Footer({ content, locale, contact }: FooterProps) {
   const year = new Date().getFullYear();
-  // Social profile URLs live in lib/site-config.ts; empty ones render as disabled labels.
+  // Social profile URLs come from the CMS (fallback lib/site-config.ts); empty ones render as disabled labels.
   const social: Record<string, string | null> = {
-    instagram: siteConfig.contact.instagram,
-    linkedin: siteConfig.contact.linkedin,
+    instagram: contact.instagram,
+    linkedin: contact.linkedin,
   };
 
   return (

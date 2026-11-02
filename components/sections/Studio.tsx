@@ -1,5 +1,5 @@
 import type { Content } from "@/lib/i18n";
-import { images } from "@/data/images";
+import type { Slike } from "@/lib/cms";
 import { Container } from "@/components/ui/Container";
 import { SectionFolio } from "@/components/ui/SectionFolio";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,13 +11,14 @@ import { Check } from "lucide-react";
 
 interface StudioProps {
   content: Content["studio"];
+  images: Slike;
 }
 
 /**
  * Who we are, who works on your project, who we work for, and the showroom.
  * One section, no repetition with the rest of the page.
  */
-export function Studio({ content }: StudioProps) {
+export function Studio({ content, images }: StudioProps) {
   const { team, audience, showroom } = content;
   return (
     <section id="studio" className="scroll-mt-[72px] lg:scroll-mt-24">

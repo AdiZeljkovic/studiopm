@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { Geist, Instrument_Serif } from "next/font/google";
 import "../globals.css";
 import { siteConfig } from "@/lib/site-config";
-import { defaultLocale, getContent, hasLocale, localeLabels, locales } from "@/lib/i18n";
+import { defaultLocale, hasLocale, localeLabels, locales } from "@/lib/i18n";
+import { getSadrzaj } from "@/lib/cms";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { HashLinkHandler } from "@/components/providers/HashLinkHandler";
 import { Header } from "@/components/layout/Header";
@@ -28,10 +29,13 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+/** Sigurnosna mreža: i bez poziva iz CMS-a stranice se osvježe najkasnije za sat. */
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
-  const t = getContent(locale);
+  const { t } = await getSadrzaj(locale);
   const share = siteConfig.shareImage;
   return {
     metadataBase: new URL(siteConfig.url),
@@ -79,9 +83,9 @@ export const viewport: Viewport = {
 export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(locale)) notFound();
-  const t = getContent(locale);
+  const { t, contact } = await getSadrzaj(locale);
 
-  const { contact, showroom } = siteConfig;
+  const { showroom } = siteConfig;
   const sameAs = [contact.instagram, contact.linkedin, siteConfig.parentUrl].filter(Boolean);
   const structuredData = {
     "@context": "https://schema.org",
@@ -145,7 +149,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           <main id="main" className="flex-1">
             {children}
           </main>
-          <Footer content={t.footer} locale={locale} />
+          <Footer content={t.footer} locale={locale} contact={contact} />
         </MotionProvider>
         <script
           type="application/ld+json"

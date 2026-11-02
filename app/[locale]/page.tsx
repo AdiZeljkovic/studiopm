@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { getContent, hasLocale } from "@/lib/i18n";
-import { images } from "@/data/images";
+import { hasLocale } from "@/lib/i18n";
+import { getSadrzaj } from "@/lib/cms";
 import { Hero } from "@/components/sections/Hero";
 import { Studio } from "@/components/sections/Studio";
 import { VisualBreak } from "@/components/sections/VisualBreak";
@@ -21,18 +21,18 @@ import { Closing } from "@/components/sections/Closing";
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(locale)) notFound();
-  const t = getContent(locale);
+  const { t, images, contact } = await getSadrzaj(locale);
 
   return (
     <>
-      <Hero content={t.hero} />
-      <Studio content={t.studio} />
-      <VisualBreak content={t.visualBreak} />
+      <Hero content={t.hero} images={images} />
+      <Studio content={t.studio} images={images} />
+      <VisualBreak content={t.visualBreak} images={images} />
       <Expertise content={t.expertise} images={images.services} />
-      <Advantage content={t.advantage} />
+      <Advantage content={t.advantage} images={images} />
       <Process content={t.process} />
       <ProjectInquirySection intro={t.projectCta} content={t.inquiry} locale={locale} />
-      <Closing content={t.closing} />
+      <Closing content={t.closing} contact={contact} />
     </>
   );
 }

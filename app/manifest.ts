@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site-config";
-import { defaultLocale, getContent } from "@/lib/i18n";
+import { defaultLocale } from "@/lib/i18n";
+import { getSadrzaj } from "@/lib/cms";
 
-export default function manifest(): MetadataRoute.Manifest {
-  const t = getContent(defaultLocale);
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const { t } = await getSadrzaj(defaultLocale);
   return {
     name: siteConfig.name,
     short_name: siteConfig.name,
