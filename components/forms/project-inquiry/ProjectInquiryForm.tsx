@@ -129,10 +129,14 @@ export function ProjectInquiryForm({ content, locale, privacyHref }: ProjectInqu
   const onValid = async (data: ProjectInquiry) => {
     setStatus("submitting");
     try {
+      // Fajl koji se još šalje: sačekaj ga (dugme već kaže „Envoi…"), da upit ne ode bez njega.
+      for (let i = 0; i < 1200 && methods.getValues("attachments").some((a) => a.status === "uploading"); i++) {
+        await new Promise((r) => setTimeout(r, 500));
+      }
       const response = await fetch("/api/project-inquiry", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...normaliseInquiryValues(data), locale, website: honeypot }),
+        body: JSON.stringify({ ...normaliseInquiryValues(data), attachments: methods.getValues("attachments"), locale, website: honeypot }),
       });
       if (!response.ok) throw new Error(`Request failed (${response.status})`);
       clearDraft();

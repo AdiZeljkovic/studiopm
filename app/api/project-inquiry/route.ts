@@ -2,28 +2,12 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { projectInquirySchema } from "@/lib/project-inquiry/schema";
 import { deliverInquiry } from "@/lib/project-inquiry/delivery";
+import { ogranicenje } from "@/lib/ogranicenje";
 
 export const runtime = "nodejs";
 
-// Po IP adresi: 5 upita u 10 minuta (u memoriji je dovoljno — jedan kontejner).
-const PROZOR = 10 * 60 * 1000;
-const LIMIT = 5;
-const nedavni = new Map<string, number[]>();
-
-function previse(req: Request) {
-  // Cloudflare → Traefik (kao portmix.ch): posjetilac je u cf-connecting-ip, inače adresa konekcije
-  const ip =
-    req.headers.get("cf-connecting-ip") ||
-    req.headers.get("x-real-ip") ||
-    req.headers.get("x-forwarded-for")?.split(",").pop()?.trim() ||
-    "nepoznata";
-  const sad = Date.now();
-  if (nedavni.size > 2000) for (const [k, l] of nedavni) if (l.every((t) => sad - t >= PROZOR)) nedavni.delete(k);
-  const lista = (nedavni.get(ip) ?? []).filter((t) => sad - t < PROZOR);
-  lista.push(sad);
-  nedavni.set(ip, lista);
-  return lista.length > LIMIT;
-}
+// Po IP adresi: 5 upita u 10 minuta.
+const previse = ogranicenje(5, 10 * 60 * 1000);
 
 /**
  * POST /api/project-inquiry

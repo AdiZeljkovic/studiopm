@@ -70,12 +70,12 @@ A honeypot field (`website`) is included; anything that fills it is dropped sile
 
 ### File uploads
 
-`lib/project-inquiry/upload.ts` abstracts uploads behind an adapter. The default `simulated` mode keeps files in the browser and tells the user that storage is not connected yet. To enable real uploads:
+`lib/project-inquiry/upload.ts` abstracts uploads behind an adapter. The default `simulated` mode keeps files in the browser and tells the user that storage is not connected yet. Real uploads go to PortMix CMS:
 
-1. Implement storage in `app/api/upload/route.ts` (S3, Cloudflare R2, Laravel, or local disk; examples are in the file) so it returns `{ id, url }`.
-2. Set `NEXT_PUBLIC_UPLOAD_MODE=api`.
+1. Set `CMS_URL` and `INQUIRY_WEBHOOK_SECRET` (the same secret as the inquiry webhook, = `FORME_TAJNA` in the CMS).
+2. Set `NEXT_PUBLIC_UPLOAD_MODE=api` — **at build time** (`NEXT_PUBLIC_*` is baked into the client bundle).
 
-Attachment metadata (name, size, type, url) is then included in the inquiry payload.
+`app/api/upload/route.ts` forwards each file to `CMS_URL/api/prilozi/forma/studio` and returns `{ id, ref }`. The `ref` travels with the inquiry, and the CMS attaches the files to it (Upiti → the inquiry → „Prilozi"). Files that never get an inquiry are deleted by the CMS after two days.
 
 Answers autosave to `localStorage` for two weeks (`lib/project-inquiry/draft.ts`) and are cleared on successful submission.
 

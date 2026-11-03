@@ -93,5 +93,6 @@ export function proxy(request: NextRequest) {
 export const config = {
   // Skip Next internals and any file with an extension (images, icons,
   // email assets, robots.txt, sitemap.xml, ...). Email assets must stay public.
-  matcher: ["/((?!_next|.*\\..*).*)"],
+  // /api/upload: kroz proxy bi tijelo bilo odsječeno na 10 MB (prilozi su do 25 MB).
+  matcher: ["/((?!_next|api/upload|.*\\..*).*)"],
 };

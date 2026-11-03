@@ -4,9 +4,8 @@
  * Two adapters exist:
  *  - `simulated` (default): files stay in the browser; progress is animated so
  *    the UI can be designed and tested. Nothing is transferred and the UI says so.
- *  - `api`: files are POSTed to /api/upload with real progress events. That
- *    route must be connected to storage first (S3 / Cloudflare R2 / Laravel /
- *    local disk) — see app/api/upload/route.ts.
+ *  - `api`: files are POSTed to /api/upload with real progress events; that
+ *    route stores them in PortMix CMS (see app/api/upload/route.ts).
  *
  * Switch with NEXT_PUBLIC_UPLOAD_MODE=api once the backend is ready.
  */
@@ -40,6 +39,7 @@ export const uploadMode: UploadMode = process.env.NEXT_PUBLIC_UPLOAD_MODE === "a
 export interface UploadResult {
   id: string;
   url?: string;
+  ref?: string;
 }
 
 export interface UploadAdapter {
@@ -107,7 +107,7 @@ const apiAdapter: UploadAdapter = {
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
           try {
-            const json = JSON.parse(xhr.responseText) as { id: string; url?: string };
+            const json = JSON.parse(xhr.responseText) as UploadResult;
             resolve(json);
           } catch {
             reject(new Error("Unexpected upload response."));

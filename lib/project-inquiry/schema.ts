@@ -28,6 +28,8 @@ export const attachmentSchema = z.object({
   status: z.enum(attachmentStatuses),
   /** Set once a real storage backend returns a location. */
   url: z.string().optional(),
+  /** Ključ fajla u PortMix CMS-u — panel po njemu veže fajl za upit. */
+  ref: z.string().max(64).optional(),
 });
 
 /**
