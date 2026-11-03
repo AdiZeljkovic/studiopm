@@ -27,7 +27,9 @@ const nextConfig: NextConfig = {
           ]
         : []),
     ],
-    formats: ["image/avif", "image/webp"],
+    // Samo WebP: AVIF je ~20–30 % manji, ali ga server pravi višestruko sporije i sa mnogo
+    // više memorije (studio je pri zagrijavanju dosegao 508 MB).
+    formats: ["image/webp"],
     // Dan, ne mjesec: zamijenjena fotografija u CMS-u treba se pojaviti brzo.
     minimumCacheTTL: 60 * 60 * 24,
     // Lokalno je CMS na localhost-u; u produkciji je na javnoj adresi.
