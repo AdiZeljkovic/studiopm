@@ -8,6 +8,7 @@ import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
 import type { Locale } from "@/lib/i18n";
 import type { NavLink } from "@/data/content/types";
+import { putanja } from "@/lib/veza";
 import { Logo } from "@/components/layout/Logo";
 import { LanguageSwitch } from "@/components/layout/LanguageSwitch";
 
@@ -25,8 +26,7 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
-  const home = `/${locale}`;
-  const to = (hash: string) => `${home}${hash}`;
+  const to = (href: string) => putanja(locale, href);
 
   // Track the section currently in view for the active navigation state.
   useEffect(() => {
@@ -78,14 +78,14 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
       )}
     >
       <div className="container-site flex h-[72px] items-center justify-between gap-4 lg:h-24">
-        <Logo href={home} priority className="relative z-[60]" />
+        <Logo href={`/${locale}`} priority className="relative z-[60]" />
 
         <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-8 xl:gap-10">
-            {links.map((link) => {
+            {links.map((link, i) => {
               const isActive = active === link.href;
               return (
-                <li key={link.href}>
+                <li key={`${i}-${link.href}`}>
                   <Link
                     href={to(link.href)}
                     aria-current={isActive ? "true" : undefined}
@@ -170,7 +170,7 @@ export function Header({ locale, links, cta, labels, meta }: HeaderProps) {
                 <ul className="flex flex-col border-t border-line">
                   {links.map((link, i) => (
                     <m.li
-                      key={link.href}
+                      key={`${i}-${link.href}`}
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}

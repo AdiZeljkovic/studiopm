@@ -450,13 +450,73 @@ export const fr: Content = {
     privacy: {
       title: "Politique de confidentialité",
       intro:
-        "Cette page décrira la manière dont Studio PortMix traite les données personnelles transmises via ce site.",
-      placeholder: "Contenu à fournir par Studio PortMix.",
+        "Nous traitons vos données personnelles avec soin et conformément à la loi fédérale sur la protection des données (LPD). Cette page explique quelles données nous traitons lorsque vous utilisez ce site, pourquoi, et quels sont vos droits.",
+      updated: "Dernière mise à jour : novembre 2026",
+      sections: [
+        {
+          title: "Responsable du traitement",
+          body: "PortMix SA, Route des Toches 3, 1026 Echandens, Suisse.\nStudio PortMix est le département d’architecture d’intérieur de PortMix SA.\nPour toute question relative à la protection des données : info@portmix.ch, +41 21 611 12 14.",
+        },
+        {
+          title: "Données que nous traitons",
+          body: "Lorsque vous nous envoyez une demande de projet : votre nom, votre adresse e-mail, votre numéro de téléphone, le lieu du projet, les informations que vous donnez sur votre projet et les documents que vous joignez.\nLorsque vous consultez le site : des données techniques (adresse IP, date et heure, pages consultées, type de navigateur), enregistrées par le serveur pour assurer le fonctionnement et la sécurité du site.",
+        },
+        {
+          title: "Pourquoi nous les traitons",
+          body: "Nous utilisons les données de votre demande uniquement pour y répondre, préparer une proposition et, si vous nous confiez votre projet, pour le mener à bien. Les données techniques servent à faire fonctionner le site et à le protéger contre les abus. Nous ne vendons pas vos données et ne les utilisons pas à des fins publicitaires.",
+        },
+        {
+          title: "Hébergement et prestataires",
+          body: "Le site, les demandes et les documents joints sont hébergés sur des serveurs de Hetzner Online GmbH situés dans l’Union européenne. Le trafic du site peut passer par Cloudflare (protection et accélération). Les notifications de nouvelles demandes sont envoyées à notre messagerie (Microsoft 365). Ces prestataires traitent les données uniquement pour notre compte. Lorsque des données peuvent être traitées hors de Suisse ou de l’UE, notamment aux États-Unis, cela se fait avec des garanties appropriées, par exemple le Swiss-U.S. Data Privacy Framework ou des clauses contractuelles types.",
+        },
+        {
+          title: "Durée de conservation",
+          body: "Nous conservons les données d’une demande aussi longtemps que nécessaire pour la traiter. Si la demande n’aboutit pas à un mandat, elle est supprimée au plus tard 24 mois après le dernier échange. Les données liées à un mandat sont conservées selon les obligations légales, en principe 10 ans. Les documents joints à un formulaire qui n’a pas été envoyé sont supprimés automatiquement après 2 jours.",
+        },
+        {
+          title: "Cookies et stockage dans votre navigateur",
+          body: "Ce site n’utilise pas de cookies publicitaires ni d’outils d’analyse. Pendant que vous remplissez le formulaire de projet, vos réponses sont enregistrées dans votre propre navigateur (stockage local) pour que vous puissiez reprendre plus tard ; elles y sont effacées après l’envoi, ou au plus tard après 14 jours.",
+        },
+        {
+          title: "Vos droits",
+          body: "Vous pouvez à tout moment demander quelles données nous détenons sur vous, les faire corriger ou supprimer, et vous opposer à leur traitement. Écrivez-nous à info@portmix.ch. Vous pouvez également vous adresser au Préposé fédéral à la protection des données et à la transparence (PFPDT), www.edoeb.admin.ch.",
+        },
+        {
+          title: "Modifications",
+          body: "Nous pouvons adapter cette politique lorsque le site ou la loi évoluent. La version publiée sur cette page fait foi.",
+        },
+      ],
     },
     legal: {
       title: "Mentions légales",
-      intro: "Informations sur l’entreprise et mentions légales de Studio PortMix.",
-      placeholder: "Contenu à fournir par Studio PortMix.",
+      intro: "Informations sur l’entreprise qui exploite ce site.",
+      updated: "",
+      sections: [
+        {
+          title: "Exploitant du site",
+          body: "PortMix SA\nStudio PortMix, architecture d’intérieur\nRoute des Toches 3\n1026 Echandens, Suisse",
+        },
+        {
+          title: "Contact",
+          body: "Téléphone : +41 21 611 12 14\nE-mail : info@portmix.ch",
+        },
+        {
+          title: "Registre du commerce",
+          body: "Société anonyme inscrite au registre du commerce du canton de Vaud.\nNuméro IDE : CHE-329.971.742",
+        },
+        {
+          title: "Responsabilité",
+          body: "Nous apportons le plus grand soin aux informations publiées sur ce site, sans pouvoir garantir qu’elles soient exactes, complètes et à jour en tout temps. Les liens vers d’autres sites sont fournis à titre d’information ; leur contenu relève de la seule responsabilité de leurs exploitants.",
+        },
+        {
+          title: "Droits d’auteur",
+          body: "Les textes, images, plans et logos de ce site appartiennent à PortMix SA ou sont utilisés avec autorisation. Toute reproduction nécessite notre accord écrit préalable. Certaines photographies d’illustration proviennent d’Unsplash.",
+        },
+        {
+          title: "Conception du site",
+          body: "Luminor Solutions, luminor.solutions",
+        },
+      ],
     },
     back: "Retour au studio",
   },

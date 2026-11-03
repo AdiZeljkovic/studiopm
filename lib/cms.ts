@@ -27,7 +27,44 @@ export type Kontakt = { -readonly [K in keyof typeof siteConfig.contact]: (typeo
 type J = Record<string, any>;
 
 /** Polja koja Payload dodaje svakom redu/globalu — nisu tekst sajta. */
-const SISTEMSKI = new Set(["id", "createdAt", "updatedAt", "globalType", "blockType", "blockName"]);
+const SISTEMSKI = new Set(["id", "createdAt", "updatedAt", "globalType", "blockType", "blockName", "kod", "slika"]);
+
+/** Vrijednosti koje su u kodu ključevi, ne tekst (id reda, vrijednost odgovora, oznaka slike) — ostaju iz koda. */
+const KLJUCEVI_KODA = new Set(["id", "value", "image", "icon"]);
+
+/** Prazan red istog oblika kao red iz koda — za novi red iz panela (tekst dolazi iz CMS-a). */
+function prazanRed<T>(z: T): T {
+  if (typeof z === "string") return "" as T;
+  if (Array.isArray(z)) return [] as T;
+  if (z && typeof z === "object") {
+    const out: J = {};
+    for (const [k, zv] of Object.entries(z as J)) if (!KLJUCEVI_KODA.has(k)) out[k] = prazanRed(zv);
+    return out as T;
+  }
+  return z;
+}
+
+const dvaMjesta = (i: number) => String(i + 1).padStart(2, "0");
+
+/**
+ * Lista redova iz panela. Red nosi `kod` (id stavke u kodu ili njen redni broj): po njemu
+ * se nalazi stavka iz koda (prazno polje = njen tekst, uz to id i slika), i kad je red
+ * premješten. Novi red nema `kod` — samo tekst iz panela. Redni broj („01") ide po mjestu.
+ * Odgovori upitnika (stavke sa `value`) su fiksni — po mjestu, kao i forma.
+ */
+function prekrijListu<T>(z: readonly T[], v: unknown): T[] {
+  const lista = Array.isArray(v) ? (v as J[]) : [];
+  if (!lista.length) return [...z];
+  if (z.some((x) => x && typeof x === "object" && "value" in (x as J))) return z.map((zi, i) => prekrij(zi, lista[i]));
+  return lista.map((vi, i) => {
+    const kod = typeof vi?.kod === "string" ? vi.kod : null;
+    const zi = kod === null ? undefined : z.find((x, j) => String((x as J)?.id ?? j) === kod);
+    const red = prekrij(zi ?? prazanRed(z[0]), vi) as J;
+    if ("number" in red) red.number = dvaMjesta(i);
+    if ("id" in (z[0] as J) && !zi) red.id = `stavka-${i + 1}`;
+    return red as T;
+  });
+}
 
 /** Generičko spajanje: vrijednost iz CMS-a preko vrijednosti iz koda, istim oblikom. */
 function prekrij<T>(z: T, v: unknown): T {
@@ -38,13 +75,12 @@ function prekrij<T>(z: T, v: unknown): T {
       const redovi = v.split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
       return (redovi.length ? redovi : z) as T;
     }
-    const lista = Array.isArray(v) ? v : [];
-    return z.map((zi, i) => prekrij(zi, lista[i])) as T;
+    return prekrijListu(z, v) as T;
   }
   if (z && typeof z === "object") {
     const izvor = (v && typeof v === "object" ? v : {}) as J;
     const out: J = {};
-    for (const [k, zv] of Object.entries(z as J)) out[k] = prekrij(zv, izvor[k]);
+    for (const [k, zv] of Object.entries(z as J)) out[k] = KLJUCEVI_KODA.has(k) ? zv : prekrij(zv, izvor[k]);
     // tekst kojeg u kodu nema (npr. pomoć ispod ponuđenog odgovora u upitniku) — iz CMS-a
     for (const [k, cv] of Object.entries(izvor))
       if (!(k in out) && !SISTEMSKI.has(k) && typeof cv === "string" && cv.trim()) out[k] = cv;
@@ -126,12 +162,33 @@ async function povuci(locale: Locale): Promise<J | null> {
 
 export type Sadrzaj = { t: Content; images: Slike; contact: Kontakt };
 
+/**
+ * Fotografija svake usluge: iz njenog reda u panelu, inače iz koda (po `kod`-u reda);
+ * nova usluga bez fotografije dobija prvu fotografiju usluga iz koda. Novi ključevi
+ * (`stavka-5`) idu u isti registar, pa komponenta radi kao i ranije.
+ */
+function slikeUsluga(t: Content, d: J | null, images: Slike) {
+  const redovi = Array.isArray(d?.expertise?.services) ? (d!.expertise.services as J[]) : [];
+  const izKoda = slikeIzKoda.services as Record<string, SiteImage>;
+  const prva = Object.values(izKoda)[0];
+  const registar = { ...images.services } as Record<string, SiteImage>;
+  t.expertise.services.forEach((s, i) => {
+    // nova usluga (iz panela) nema oznaku slike iz koda — ključ je njen id
+    const kljuc = (s.image as string | undefined) ?? s.id;
+    const zadana = (images.services as Record<string, SiteImage>)[kljuc] ?? prva;
+    registar[kljuc] = slika(redovi[i]?.slika, zadana);
+    (s as { image: string }).image = kljuc;
+  });
+  return { ...images, services: registar } as Slike;
+}
+
 /** Tekst, fotografije i kontakt za jezik (jednom po renderu). */
 export const getSadrzaj = cache(async (locale: Locale): Promise<Sadrzaj> => {
   const d = await povuci(locale);
+  const t = prekrij(getContent(locale), d);
   return {
-    t: prekrij(getContent(locale), d),
-    images: slike(slikeIzKoda as J, d?.slike) as Slike,
+    t,
+    images: slikeUsluga(t, d, slike(slikeIzKoda as J, d?.slike) as Slike),
     contact: kontakt(d?.kontakt),
   };
 });

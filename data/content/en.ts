@@ -450,13 +450,74 @@ export const en = {
   legalPages: {
     privacy: {
       title: "Privacy policy",
-      intro: "This page will describe how Studio PortMix handles personal data submitted through this website.",
-      placeholder: "Content to be provided by Studio PortMix.",
+      intro:
+        "We handle your personal data with care and in accordance with the Swiss Federal Act on Data Protection (FADP). This page explains which data we process when you use this website, why, and what your rights are.",
+      updated: "Last updated: November 2026",
+      sections: [
+        {
+          title: "Data controller",
+          body: "PortMix SA, Route des Toches 3, 1026 Echandens, Switzerland.\nStudio PortMix is the interior architecture department of PortMix SA.\nFor any data protection question: info@portmix.ch, +41 21 611 12 14.",
+        },
+        {
+          title: "Data we process",
+          body: "When you send us a project inquiry: your name, email address, phone number, project location, the information you give about your project and any documents you attach.\nWhen you visit the website: technical data (IP address, date and time, pages visited, browser type), logged by the server to keep the website running and secure.",
+        },
+        {
+          title: "Why we process it",
+          body: "We use the data from your inquiry only to answer it, prepare a proposal and, if you entrust us with your project, to carry it out. Technical data is used to run the website and protect it against abuse. We do not sell your data or use it for advertising.",
+        },
+        {
+          title: "Hosting and service providers",
+          body: "The website, inquiries and attached documents are hosted on servers of Hetzner Online GmbH located in the European Union. Website traffic may pass through Cloudflare (security and performance). Notifications of new inquiries are sent to our mailbox (Microsoft 365). These providers process data only on our behalf. Where data may be processed outside Switzerland or the EU, in particular in the United States, this is done with appropriate safeguards, such as the Swiss-U.S. Data Privacy Framework or standard contractual clauses.",
+        },
+        {
+          title: "How long we keep it",
+          body: "We keep inquiry data for as long as needed to handle it. If an inquiry does not lead to an engagement, it is deleted no later than 24 months after our last exchange. Data related to an engagement is kept as required by law, generally 10 years. Documents attached to a form that was never sent are deleted automatically after 2 days.",
+        },
+        {
+          title: "Cookies and storage in your browser",
+          body: "This website does not use advertising cookies or analytics tools. While you fill in the project form, your answers are saved in your own browser (local storage) so you can come back later; they are removed there once the form is sent, or after 14 days at the latest.",
+        },
+        {
+          title: "Your rights",
+          body: "You may at any time ask which data we hold about you, have it corrected or deleted, and object to its processing. Write to us at info@portmix.ch. You may also contact the Federal Data Protection and Information Commissioner (FDPIC), www.edoeb.admin.ch.",
+        },
+        {
+          title: "Changes",
+          body: "We may update this policy when the website or the law changes. The version published on this page applies.",
+        },
+      ],
     },
     legal: {
       title: "Legal notice",
-      intro: "Company information and legal details for Studio PortMix.",
-      placeholder: "Content to be provided by Studio PortMix.",
+      intro: "Information about the company that operates this website.",
+      updated: "",
+      sections: [
+        {
+          title: "Website operator",
+          body: "PortMix SA\nStudio PortMix, interior architecture\nRoute des Toches 3\n1026 Echandens, Switzerland",
+        },
+        {
+          title: "Contact",
+          body: "Phone: +41 21 611 12 14\nEmail: info@portmix.ch",
+        },
+        {
+          title: "Commercial register",
+          body: "Public limited company (SA) registered in the commercial register of the Canton of Vaud.\nUID: CHE-329.971.742",
+        },
+        {
+          title: "Liability",
+          body: "We take great care with the information published on this website, but cannot guarantee that it is accurate, complete and up to date at all times. Links to other websites are provided for information only; their content is the sole responsibility of their operators.",
+        },
+        {
+          title: "Copyright",
+          body: "The texts, images, plans and logos on this website belong to PortMix SA or are used with permission. Any reproduction requires our prior written consent. Some illustrative photographs are from Unsplash.",
+        },
+        {
+          title: "Website design",
+          body: "Luminor Solutions, luminor.solutions",
+        },
+      ],
     },
     back: "Back to studio",
   },

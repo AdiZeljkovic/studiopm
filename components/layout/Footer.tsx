@@ -3,6 +3,7 @@ import { ArrowUp } from "lucide-react";
 import type { Kontakt } from "@/lib/cms";
 import { format } from "@/lib/i18n";
 import type { Content, Locale } from "@/lib/i18n";
+import { putanja, vanjska } from "@/lib/veza";
 import { Container } from "@/components/ui/Container";
 
 interface FooterProps {
@@ -35,9 +36,13 @@ export function Footer({ content, locale, contact }: FooterProps) {
 
           <nav aria-label="Footer">
             <ul className="flex flex-wrap gap-x-7 gap-y-3">
-              {content.navigation.map((link) => (
-                <li key={link.href}>
-                  <Link href={`/${locale}${link.href}`} className={linkClass}>
+              {content.navigation.map((link, i) => (
+                <li key={`${i}-${link.href}`}>
+                  <Link
+                    href={putanja(locale, link.href)}
+                    className={linkClass}
+                    {...(vanjska(link.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -57,8 +62,8 @@ export function Footer({ content, locale, contact }: FooterProps) {
           </p>
 
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {content.secondary.map((link) => (
-              <li key={link.label}>
+            {content.secondary.map((link, i) => (
+              <li key={`${i}-${link.label}`}>
                 {link.href in social ? (
                   social[link.href] ? (
                     <a href={social[link.href]!} target="_blank" rel="noopener noreferrer" className="link-underline hover:text-ivory">
@@ -70,7 +75,11 @@ export function Footer({ content, locale, contact }: FooterProps) {
                     </span>
                   )
                 ) : (
-                  <Link href={`/${locale}${link.href}`} className="link-underline hover:text-ivory">
+                  <Link
+                    href={putanja(locale, link.href)}
+                    className="link-underline hover:text-ivory"
+                    {...(vanjska(link.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
                     {link.label}
                   </Link>
                 )}
