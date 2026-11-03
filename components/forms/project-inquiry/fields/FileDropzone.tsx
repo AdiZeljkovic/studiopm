@@ -73,7 +73,7 @@ export function FileDropzone({ labels }: FileDropzoneProps) {
       controllers.current.set(attachment.id, controller);
       adapter.current
         .upload(file, (pct) => setProgress((p) => ({ ...p, [attachment.id]: pct })), controller.signal)
-        .then((result) => patch(attachment.id, { status: "ready", url: result.url }))
+        .then((result) => patch(attachment.id, { status: "ready", url: result.url, ref: result.ref }))
         .catch((err: unknown) => {
           if (err instanceof DOMException && err.name === "AbortError") return;
           patch(attachment.id, { status: "error" });

@@ -1,5 +1,5 @@
 import type { Content } from "@/lib/i18n";
-import { images } from "@/data/images";
+import type { Slike } from "@/lib/cms";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitLines } from "@/components/ui/SplitLines";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -8,6 +8,7 @@ import { HeroScrollCue } from "@/components/sections/HeroScrollCue";
 
 interface HeroProps {
   content: Content["hero"];
+  images: Slike;
 }
 
 /**
@@ -16,7 +17,7 @@ interface HeroProps {
  * bottom-left, so the full sentence is always readable without scrolling.
  * Intro, facts and actions continue below in the same ivory.
  */
-export function Hero({ content }: HeroProps) {
+export function Hero({ content, images }: HeroProps) {
   const panelPad = "px-5 sm:px-8 lg:px-12 2xl:px-16";
   const panelShift = "-ml-5 sm:-ml-8 lg:-ml-12 2xl:-ml-16";
 

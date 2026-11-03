@@ -60,6 +60,7 @@ export function Figure({
           fill
           sizes={sizes}
           priority={priority}
+          style={{ objectPosition: image.position }}
           className={cn(
             "object-cover",
             hover &&

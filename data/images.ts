@@ -33,6 +33,8 @@ export interface SiteImage {
   ratio: ImageRatio;
   /** Where the placeholder comes from. Documentation only. */
   source?: "unsplash" | "local";
+  /** CSS object-position from the CMS focal point; overrides the component's default crop. */
+  position?: string;
 }
 
 const RATIO_TO_AR: Record<ImageRatio, string> = {

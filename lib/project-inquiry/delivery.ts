@@ -1,4 +1,5 @@
 import type { ProjectInquiry } from "@/lib/project-inquiry/schema";
+import { getContent } from "@/lib/i18n";
 
 /**
  * Server-side delivery of a validated project inquiry.
@@ -51,7 +52,8 @@ export async function deliverInquiry(inquiry: ProjectInquiry, meta: DeliveryMeta
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers,
-      body: JSON.stringify({ type: "project-inquiry", receivedAt: meta.receivedAt, meta, inquiry }),
+      body: JSON.stringify({ type: "project-inquiry", receivedAt: meta.receivedAt, meta, inquiry, oznake: oznake(inquiry) }),
+      signal: AbortSignal.timeout(15000),
     });
     if (!response.ok) {
       throw new Error(`Inquiry webhook responded with ${response.status}`);
@@ -61,6 +63,24 @@ export async function deliverInquiry(inquiry: ProjectInquiry, meta: DeliveryMeta
 
   // TODO: connect Resend, SMTP or another provider (see notes above).
   return { delivered: false, channel: "none" };
+}
+
+/**
+ * Izabrani odgovori kao tekst (francuski, kao na sajtu) umjesto internih vrijednosti —
+ * u panelu piše „Particulier", a ne „private".
+ */
+function oznake(inquiry: ProjectInquiry) {
+  const s = getContent("fr").inquiry.steps;
+  const naziv = (opcije: readonly { value: string; label: string }[], v?: string) =>
+    v ? (opcije.find((o) => o.value === v)?.label ?? v) : undefined;
+  return {
+    clientType: naziv(s.contact.clientType.options, inquiry.clientType),
+    projectTypes: inquiry.projectTypes.map((v) => naziv(s.project.projectTypes.options, v)),
+    propertyType: naziv(s.project.propertyType.options, inquiry.propertyType),
+    stage: naziv(s.timeline.stage.options, inquiry.stage),
+    timing: naziv(s.timeline.timing.options, inquiry.timing),
+    source: naziv(s.finish.source.options, inquiry.source),
+  };
 }
 
 /** Plain-text rendering, handy for email bodies. */

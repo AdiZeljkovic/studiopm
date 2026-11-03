@@ -7,14 +7,15 @@ import { Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { EASE_OUT } from "@/lib/motion";
 import type { Content } from "@/lib/i18n";
-import type { ServiceImageKey, SiteImage } from "@/data/images";
+import type { SiteImage } from "@/data/images";
 import { Container } from "@/components/ui/Container";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { Figure } from "@/components/ui/Figure";
 
 interface ExpertiseProps {
   content: Content["expertise"];
-  images: Record<ServiceImageKey, SiteImage>;
+  /** ključ = `service.image` (iz koda, ili `stavka-N` za uslugu dodanu u panelu) */
+  images: Record<string, SiteImage>;
 }
 
 const hoverCapable = () =>
@@ -128,6 +129,7 @@ export function Expertise({ content, images }: ExpertiseProps) {
                     alt={images[service.image].alt}
                     fill
                     sizes="(min-width: 1024px) 40vw, 100vw"
+                    style={{ objectPosition: images[service.image].position }}
                     className={cn(
                       "object-cover transition-opacity duration-700 ease-[var(--ease-out-expo)]",
                       i === active ? "opacity-100" : "opacity-0",

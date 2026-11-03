@@ -1,19 +1,37 @@
 import type { NextConfig } from "next";
 
+/** PortMix CMS: odatle dolaze fotografije koje klijent postavi (next/image ih smanjuje). */
+const cms = (() => {
+  try {
+    return process.env.CMS_URL ? new URL(process.env.CMS_URL) : null;
+  } catch {
+    return null;
+  }
+})();
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
-    // Development imagery is served from Unsplash. Once real Studio PortMix
-    // photography is available, drop the files into /public/images and update
-    // data/images.ts — this pattern can then be removed.
+    // Unsplash: podrazumijevane fotografije iz koda (dok ih CMS ne zamijeni).
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
+      ...(cms
+        ? [
+            {
+              protocol: (cms.protocol === "http:" ? "http" : "https") as "http" | "https",
+              hostname: cms.hostname,
+              port: cms.port,
+              pathname: "/api/mediji/file/**",
+            },
+          ]
+        : []),
     ],
     formats: ["image/avif", "image/webp"],
-    // Unsplash ids and local files never change content, so optimised
-    // variants can be cached for a long time.
-    minimumCacheTTL: 60 * 60 * 24 * 30,
+    // Dan, ne mjesec: zamijenjena fotografija u CMS-u treba se pojaviti brzo.
+    minimumCacheTTL: 60 * 60 * 24,
+    // Lokalno je CMS na localhost-u; u produkciji je na javnoj adresi.
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === "development" || process.env.CMS_LOKALNO === "1",
   },
 };
 

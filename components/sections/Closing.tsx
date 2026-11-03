@@ -1,5 +1,5 @@
 import type { Content } from "@/lib/i18n";
-import { siteConfig } from "@/lib/site-config";
+import type { Kontakt } from "@/lib/cms";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionFolio } from "@/components/ui/SectionFolio";
@@ -8,11 +8,12 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 
 interface ClosingProps {
   content: Content["closing"];
+  contact: Kontakt;
 }
 
 /** Contact coordinates. Target of the "Contact" menu item (#contact). */
-export function Closing({ content }: ClosingProps) {
-  const { email, phone, addressLines, instagram, linkedin } = siteConfig.contact;
+export function Closing({ content, contact }: ClosingProps) {
+  const { email, phone, addressLines, instagram, linkedin } = contact;
   const socials = [
     { label: "Instagram", href: instagram },
     { label: "LinkedIn", href: linkedin },

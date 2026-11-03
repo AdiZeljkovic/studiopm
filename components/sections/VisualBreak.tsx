@@ -1,13 +1,14 @@
 import Image from "next/image";
 import type { Content } from "@/lib/i18n";
-import { images } from "@/data/images";
+import type { Slike } from "@/lib/cms";
 import { ImageReveal } from "@/components/ui/ImageReveal";
 
 interface VisualBreakProps {
   content: Content["visualBreak"];
+  images: Slike;
 }
 
-export function VisualBreak({ content }: VisualBreakProps) {
+export function VisualBreak({ content, images }: VisualBreakProps) {
   return (
     <section aria-label={content.label} className="overflow-hidden">
       <ImageReveal className="w-full">
@@ -17,6 +18,7 @@ export function VisualBreak({ content }: VisualBreakProps) {
             alt={images.visualBreak.alt}
             fill
             sizes="100vw"
+            style={{ objectPosition: images.visualBreak.position }}
             className="object-cover object-[45%_22%]"
           />
         </div>
